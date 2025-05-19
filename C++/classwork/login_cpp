@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+
+int main() {
+	for (int i = 0; i < 3; i++ ) {
+		std::string anun;
+		std::string parol;
+		std::cout << "greq dzer mutqanuny: " << std::endl;
+		std::cin >> anun;
+		if( anun == "Student") {
+		std::cout << "greq dzer gaxtanbar: " << std::endl;
+		std::cin >> parol;
+			if( parol == "Student") {
+			std::cout << "nuynakanacum" << std::endl;
+			break;
+			} else 
+			std::cout << "sxal gaxtnabar" << std::endl;
+			continue;
+		} else
+			std::cout << "sxal mutqanun" << std::endl;
+			continue; 
+	}
+		return 0;
+}
