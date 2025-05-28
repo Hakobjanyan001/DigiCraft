@@ -1,7 +1,7 @@
 #include <iostream>
 
 int main() {
-/*	float a = 4.4;
+	float a = 4.4;
 	int d = a;
 	std::cout << d << std::endl << std::endl;
 
@@ -42,7 +42,7 @@ int main() {
 
 	int a = "barev";
 	std::cout << a << std::endl;
-*/
+
 	return 0;
 }
 

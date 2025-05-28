@@ -27,6 +27,7 @@ int main() {
 	}
 return 0;
 }
+
 */
 
 enum eHarcer { ANGL, MATEM, CRAG, };
