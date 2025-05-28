@@ -21,7 +21,6 @@ int sum( int iGumareli1, int iGumareli2, int iGumareli3){
 	iSum = iGumareli1 + iGumareli2 + iGumareli3;
 	return iSum;
 }
-*/
 
 
 int sum(int);
@@ -37,4 +36,26 @@ int sum(int i) {
 		iSum = iSum + i;	
 		}
 		return iSum;
+}
+*/
+
+
+void printName( std::string, std::string, int ); 
+
+int main() {
+	std::cout << "greq dzer anuny: ";
+	std::string sAnun = "";
+	std::cin >> sAnun;
+	std::cout << "greq dzer azganuny: ";
+	std::string sAzganun = "";
+	std::cin >> sAzganun;
+	std::cout << "greq dzer tariqy: ";
+	int iTariq = 0;
+	std::cin >> iTariq;
+	printName( sAnun, sAzganun, iTariq );	
+return 0;
+}
+
+void printName ( std::string sName, std::string sSurname, int iAge) {
+		std::cout << sName << " " << sSurname << " " << iAge << std::endl;
 }
