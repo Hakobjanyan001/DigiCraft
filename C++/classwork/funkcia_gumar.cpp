@@ -23,19 +23,18 @@ int sum( int iGumareli1, int iGumareli2, int iGumareli3){
 }
 
 
-int sum(int);
+void sum(int);
 
 int main() {
 	std::cout << sum(1) << std::endl;
 	return 0;
 }
 
-int sum(int i) {
+void sum(int i) {
 	int iSum = 0;
 		for( i = 1; i < 11; i++ ) {
 		iSum = iSum + i;	
 		}
-		return iSum;
 }
 */
 
@@ -58,4 +57,21 @@ return 0;
 
 void printName ( std::string sName, std::string sSurname, int iAge) {
 		std::cout << sName << " " << sSurname << " " << iAge << std::endl;
+}
+
+
+
+int sumTon ( int n );
+
+int main () {
+	std::cout << sumTon(50) << std::endl;
+	return 0;
+}
+
+int sumTon ( int n ) {
+	int iSum = 0;
+	for(int i = 1; i <= n; i++) {
+	iSum += i;
+	}
+	return iSum;
 }
