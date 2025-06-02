@@ -14,8 +14,8 @@ int num( int i ){
 	if( i < 1 ){	
 	return 0;
 	}else {
-	i--;
 	std::cout << i << std::endl;
+	i--;
 	return num(i);
 	}	
 }
