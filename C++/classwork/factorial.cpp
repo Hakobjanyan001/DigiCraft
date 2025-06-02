@@ -9,9 +9,11 @@ int main() {
 	std::cout << "greq tivy" << std::endl;
 	int x = 0;
 	std::cin >> x;
+	if ( x >= 0) {
 	factoryal(x);
 	int iPatasxan = factoryal(x);
 	std::cout << iPatasxan << std::endl;
+	}
 return 0;
 }
 
