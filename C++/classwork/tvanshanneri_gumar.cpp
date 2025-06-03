@@ -11,7 +11,7 @@ int main() {
 		if (a < 0){
 				std::cout << "ynterq drakan tiv" << std::endl;
 		} else {
-				std::cout << a <<  tvanshanneri gumary` " << sum(a) << std::endl;
+				std::cout << a << " tvanshanneri gumary` " << sum(a) << std::endl;
 		}	
 	return 0;
 }
