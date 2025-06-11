@@ -12,8 +12,8 @@ int main(){
 	Student* pStudent = new Student();
 	pStudent->pName = new std::string("Karen");
 	pStudent->pGrad = new int(24);
-	//(*pStudent).pGrad = new std::string("Karen");
-	//(*pStudent).pNrade = new int(24);
+	//(*pStudent).pName = new std::string("Karen");
+	//(*pStudent).pGrad = new int(24);
 	std::cout << *(pStudent->pName) << std::endl;
 	std::cout << *(pStudent->pGrad) << std::endl;
 	//std::cout << *((pStudent).pName) << std::endl;
