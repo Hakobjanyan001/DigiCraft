@@ -1,48 +1,29 @@
 #include <iostream>
 #include <string>
 
-// std::cout << sizeof(std::string) << std::endl;	
 
-/*
-struct Student{
-	std::string* pName = nullptr;
-	int* pGrad = nullptr;
-};
-
-int main(){
-	Student* pStudent = new Student();
-	pStudent->pName = new std::string("Karen");
-	pStudent->pGrad = new int(24);
-	//(*pStudent).pName = new std::string("Karen");
-	//(*pStudent).pGrad = new int(24);
-	std::cout << *(pStudent->pName) << std::endl;
-	std::cout << *(pStudent->pGrad) << std::endl;
-	//std::cout << *((pStudent).pName) << std::endl;
-	//std::cout << *((pStudent).pGrad) << std::endl;
-	delete pStudent->pName;
-	delete pStudent->pGrad;
-	delete pStudent;
-	//delete (*pStudent).pName;
-	//delete (*pStudent).pGrad;
-	
+int main() {
+int arr[3][3] = {
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9}
+		};
+	for (int i = 0; i < 3; i++) {
+		for (int z = 0; z < 3; z++){
+			std::cout << ((arr + i) + z) << std::endl;
+		}
+	}
 
 return 0;
 }
-*/
 
-struct Student{
-	std::string* pName = nullptr;
-	int* pGrad = nullptr;
-};
 
-int  main(){
-	Student* pStudent = new Student();
-	pStudent->pName = new std::string("Karen");
-	(*pStudent).pGrad = new int(72);
-	std::cout << *(pStudent->pName) << std::endl;
-	std::cout << *((pStudent).pGrad) << std::endl;
-	delete pStudent->pName;
-	delete (*pStudent).pGrad;
-	delete pStudent;
-	return 0;
+/*int main() {
+int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	for(int i = 0; i < 10; i++) {
+	std::cout << *arr + i << std::endl;
+	}
+int size = sizeof(arr) / sizeof(arr[0]);
+std::cout << size << std::endl;
 }
+*/
