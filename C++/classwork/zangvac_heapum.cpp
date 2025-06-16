@@ -32,7 +32,7 @@ return 0;
 */
 
 
-
+/*
 int main() {
 int* iArr = new int[5];
 	for(int z = 0; z < 5; z++) {
@@ -47,3 +47,22 @@ int* iArr = new int[5];
 delete[] iArr;
  return 0;
 }
+*/
+
+
+int main() {
+std::cout << "greq tox erkchap zangvaci";
+std::cin >> tox;
+std::cout << "greq tox erkchap zangvaci";
+std::cin >> syun;
+int tox = 0;
+int syun =0;
+	int** iArr = new int* [tox];
+	for(int i = 0; i < tox; i++) {
+		iArr[i] = new int [syun];
+	}
+	delite[] iArr;
+return 0;
+}
+
+

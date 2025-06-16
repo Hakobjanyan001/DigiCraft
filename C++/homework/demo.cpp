@@ -1,18 +1,27 @@
 #include <iostream>
 #include <string>
 
-int* foo(){
-	int* a = new int[3];
-	a[0] = 4;
-	a[1] = 55;
-	a[2] = 23;
-	return a;
-}
+class Person {
+	private:
+	int foo;
+	public:
+	std::string name;
+	int age;
+	int area();
+	Person(std::string a, int t) {
+		name = a;
+		age = t;
+		foo = 10;
+	};
+};
+
+int Person::area() {
+		return age * foo;
+};
 
 int main() {
-	int* b = foo();
-	std::cout << b << std::endl;
-	delete[] b;
-	return 0;
+	Person mard("Karen", 24);
+	std::cout << mard.area() << std::endl;
+	std::cout << mard.name << std::endl;
+return 0;
 }
-
