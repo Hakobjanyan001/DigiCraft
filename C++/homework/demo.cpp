@@ -1,70 +1,124 @@
 #include <iostream>
 #include <string>
 
-/*
-class Person {
+class Human {
+	// Voch hasaneli bolorin
 	private:
-	int foo;
-	public:
 	std::string name;
-	int age;
-	int area();
-	Person(std::string a, int t) {
-		name = a;
-		age = t;
-		foo = 10;
-	};
+	int salaryee;
+	int year;
+
+	// Cotr
+	public:
+	Human();
+	Human(std::string name, int salaryee, int year);
+	
+	// Dotr
+	public:
+	~Human();
+
+	// Str/Gtr
+	void setName(std::string name);
+	std::string getName();
+
+	void setSalaryee(int salaryee);
+	int  getSalaryee();
+
+	void setYear(int year);
+	int getYear();
+
+	// Utilitie
+	public:
+	void square();
+	void printHumanInfo();
 };
 
-int Person::area() {
-		return age * foo;
-};
-
-int main() {
-	Person mard("Karen", 24);
-	std::cout << mard.area() << std::endl;
-	std::cout << mard.name << std::endl;
-return 0;
+Human::Human()
+{
+	this->name = " ";
+	this->salaryee = 0;
+	this->year = 0;
 }
-*/
 
-class Address {
-	public:
-		std::string street;
-		std::string	city;
-		std::string	country;
-};
+Human::Human(std::string name, int salaryee, int year)
+{
+	this->name = name;
+	this->salaryee = salaryee;
+	this->year = year;
+}
 
-class Person {
-	public:
-	std::string firstName;
-	std::string lastName;
-	Address homeAddress;
-	Address workAddress;
-	Person ( std::string f, std::string l) {
-			firstName = f;
-			lastName = l;
-	};
-		void print () {
-			std::cout << firstName << " " << lastName << std::endl;
-		}
-};
+Human::~Human()
+{
 
-class Employee : public Person{
-	public:
-		float salary;
-		Employee (std::string f, std::string l, float s) : Person(f, l){
-			salary = s;
-		};
-		void print() {
-			Person::print();
-			std::cout << salary << std::endl;
-		}
-};
+}
 
+void Human::setName(std::string name)
+{
+	this->name = name;
+}
+
+std::string Human::getName()
+{
+	return this->name;
+}
+
+void Human::setSalaryee(int salaryee)
+{
+	this->salaryee = salaryee;
+}
+
+int Human::getSalaryee()
+{
+	return this->salaryee;
+}
+
+void Human::setYear(int year)
+{
+	this->year = year;
+}
+
+int Human::getYear()
+{
+	return this->year;
+}
+	
+void Human::square()
+{
+	if(year >= 5) {
+		std::cout << "ashxatavardzy kbardzrana 15 % ov` " << (this->salaryee * 15) / 100 << std::endl;
+	} else if(year >= 1) {
+				std::cout << "ashxatavardzy kbardzrana 10 % ov` " << (this->salaryee * 10) / 100 << std::endl;
+			} else {
+					std::cout << "ashxatavardzy kbardzrana 5 % ov` " << (this->salaryee * 5) / 100 << std::endl;
+				}
+}
+
+void Human::printHumanInfo() 
+{
+	std::cout << "anun " << this->name << std::endl;
+	std::cout << "ashxatavardz " << this->salaryee << std::endl;
+	std::cout << "ashxatanqain tari " << this->year << std::endl;
+}
+		
 int main() {
-	Employee a("Karen", "Hakobjanyan", 150000);
-	a.homeAddress.street = "Shinararneri 22/1";
-	a.print();
+
+	std::string name = " ";
+	int salaryee = 0;
+	int year = 0;
+
+	std::cout << "greq dzer anuny" << std::endl;
+	std::cin >> name;
+	std::cout << "greq dzer ashxatavardzy" << std::endl;
+	std::cin >> salaryee;
+	std::cout << "greq dzer ashxatanqain pordzy" << std::endl;
+	std::cin >> year;
+
+	if (year <=  0 || salaryee <= 0) {
+		std::cout << "ERROR" << std::endl;
+	} else {
+	Human hm(name, salaryee, year);
+	hm.square();
+	hm.printHumanInfo();
+	}
 	return 0;
 }
