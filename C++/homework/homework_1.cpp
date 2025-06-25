@@ -1,28 +1,28 @@
 #include <iostream>
 #include <string>
 
-class Human {
+class Employee {
 	// Voch hasaneli bolorin
 	private:
 	std::string name;
-	int salaryee;
+	int salary;
 	int year;
 
 	// Cotr
 	public:
-	Human();
-	Human(std::string name, int salaryee, int year);
+	Employee();
+	Employee(std::string name, int salary, int year);
 	
 	// Dotr
 	public:
-	~Human();
+	~Employee();
 
 	// Str/Gtr
 	void setName(std::string name);
 	std::string getName();
 
-	void setSalaryee(int salaryee);
-	int  getSalaryee();
+	void setSalary(int salary);
+	int  getSalary();
 
 	void setYear(int year);
 	int getYear();
@@ -30,95 +30,95 @@ class Human {
 	// Utilitie
 	public:
 	void square();
-	void printHumanInfo();
+	void printEmployeeInfo();
 };
 
-Human::Human()
+Employee::Employee()
 {
 	this->name = " ";
-	this->salaryee = 0;
+	this->salary = 0;
 	this->year = 0;
 }
 
-Human::Human(std::string name, int salaryee, int year)
+Employee::Employee(std::string name, int salary, int year)
 {
 	this->name = name;
-	this->salaryee = salaryee;
+	this->salary = salary;
 	this->year = year;
 }
 
-Human::~Human()
+Employee::~Employee()
 {
 
 }
 
-void Human::setName(std::string name)
+void Employee::setName(std::string name)
 {
 	this->name = name;
 }
 
-std::string Human::getName()
+std::string Employee::getName()
 {
 	return this->name;
 }
 
-void Human::setSalaryee(int salaryee)
+void Employee::setSalary(int salary)
 {
-	this->salaryee = salaryee;
+	this->salary = salary;
 }
 
-int Human::getSalaryee()
+int Employee::getSalary()
 {
-	return this->salaryee;
+	return this->salary;
 }
 
-void Human::setYear(int year)
+void Employee::setYear(int year)
 {
 	this->year = year;
 }
 
-int Human::getYear()
+int Employee::getYear()
 {
 	return this->year;
 }
 	
-void Human::square()
+void Employee::square()
 {
 	if(year >= 5) {
-		std::cout << "ashxatavardzy kbardzrana 15 % ov` " << (this->salaryee * 15) / 100 << std::endl;
+		std::cout << "ashxatavardzy kbardzrana 15 % ov` " << (this->salary * 15) / 100 << std::endl;
 	} else if(year >= 1) {
-				std::cout << "ashxatavardzy kbardzrana 10 % ov` " << (this->salaryee * 10) / 100 << std::endl;
+				std::cout << "ashxatavardzy kbardzrana 10 % ov` " << (this->salary * 10) / 100 << std::endl;
 			} else {
-					std::cout << "ashxatavardzy kbardzrana 5 % ov` " << (this->salaryee * 5) / 100 << std::endl;
+					std::cout << "ashxatavardzy kbardzrana 5 % ov` " << (this->salary * 5) / 100 << std::endl;
 				}
 }
 
-void Human::printHumanInfo() 
+void Employee::printEmployeeInfo() 
 {
 	std::cout << "anun " << this->name << std::endl;
-	std::cout << "ashxatavardz " << this->salaryee << std::endl;
+	std::cout << "ashxatavardz " << this->salary << std::endl;
 	std::cout << "ashxatanqain tari " << this->year << std::endl;
 }
 		
 int main() {
 
 	std::string name = " ";
-	int salaryee = 0;
+	int salary = 0;
 	int year = 0;
 
 	std::cout << "greq dzer anuny" << std::endl;
 	std::cin >> name;
 	std::cout << "greq dzer ashxatavardzy" << std::endl;
-	std::cin >> salaryee;
+	std::cin >> salary;
 	std::cout << "greq dzer ashxatanqain pordzy" << std::endl;
 	std::cin >> year;
 
-	if (year <=  0 || salaryee <= 0) {
+	if (year <=  0 || salary <= 0) {
 		std::cout << "ERROR" << std::endl;
 	} else {
-	Human hm(name, salaryee, year);
+	Employee hm(name, salary, year);
 	hm.square();
-	hm.printHumanInfo();
+	hm.printEmployeeInfo();
 	}
 	return 0;
 }
