@@ -15,7 +15,7 @@ const std::string& name;
 
 class Fish : public Animal{
 public:
-Fish(std::string name, int size) : 
+Fish(std::string& name, int size) : 
 	Animal(name),
 	size(size){
 	}
@@ -28,7 +28,7 @@ int size;
 
 class Shark : public Fish{
 public:
-Shark(std::string name, int size, int weight) :
+Shark(std::string& name, int size, int weight) :
 	Fish(name, size),
 	weight(weight){
 	}
