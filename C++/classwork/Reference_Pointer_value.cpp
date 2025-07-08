@@ -1,12 +1,32 @@
 #include <iostream>
 #include <string>
 
-/*int funkcia(const int a) { //Value
+//pass by
+
+void funkcia(int num){
+num += 1;
+std::cout << num << std::endl;
+}
+
+
+void funkcia(int& num){
+num += 1;
+std::cout << num << std::endl;
+}
+
+void funkcia(int* num){
+*num += 1;
+std::cout << *num << std::endl;
+}
+
+// Return________________________________________________________
+
+int funkcia(const int a) { //Return Value
+a += 1;
 return a;
 }
 
 int main() {
-int num = 5;
 int num = funkcia(&num);
 	return 0;
 }
@@ -15,12 +35,12 @@ int num = funkcia(&num);
 //_______________________________________________________
 
 
-int* funkcia(const int a) { //Pointer
+int* funkcia( int a) { // Return Pointer
+a += a;
 return &a;
 }
 
 int main() {
-int num = 5;
 int& num  = funkcia(&num);
 	return 0;
 }
@@ -28,14 +48,14 @@ int& num  = funkcia(&num);
 //______________________________________________________
 
 
-*/
-int& funkcia(const int& a) { //Reference
+
+int& funkcia(int a) { // Return Reference
+a += 1;
 return a;
 }
 
 int main() {
-int num = 5;
-int& num = funkcia(&num);
+funkcia(num);
 	return 0;
 }
 
