@@ -26,6 +26,8 @@ for i in range(10):
 
 for i in "Hello":
     print(i)
+
+
 x = 0
 while x < 10:
     print("x:", x)
@@ -56,7 +58,7 @@ def sayHello(name="Karen"):
 
 sayHello()
 
-"""
+
 
 # Data Structura_____________________________________________________________
 # 4 Himnakan ev  Global  kanteyner______________________________________________
@@ -121,5 +123,4 @@ for key, value in person.items(): # items() funkcian key + value anum u miasin v
     print(key)
     print(value)
 
-
-#_____________________________________________________________________________
+"""
