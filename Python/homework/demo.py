@@ -41,6 +41,7 @@ def sayHello():
 sayHello()
 
 #___________________________________________
+
 def sayHello(name):
     print("Hello", name)
 
@@ -123,4 +124,30 @@ for key, value in person.items(): # items() funkcian key + value anum u miasin v
     print(key)
     print(value)
 
+
+# Class ________________________________________________
+
+class Person:
+    def __init__(self, name, age):  # self -> C++ thish-> (__init__ Python constructor)
+        self.name = name
+        self.age = age
+    def sayHello(self)
+        print(f"Hello {self.name}")
+
+ps = Person("Karen", 21)
+ps.sayHello()
+
+
+
+#inheritance jarangutyun ____________________________________________
+
+class Student(Person):
+    def __init__(self, name, age, grade):
+        super().__init__(name, age)
+        self.grade = grade
+    def sayHello(self)
+        print(f"hello {self._age}")
+
+st = Student("Karen", 24, 300000)
+st.sayHallo()
 """
