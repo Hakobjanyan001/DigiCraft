@@ -17,8 +17,8 @@ for i in range(num):
     stugum(gnahatakan)
 gumar = result/num
 print(gumar)    
+________________________________________________________
 
-"""
 
 class Warke:
 
@@ -61,3 +61,33 @@ class Employee(Warke):
 
 em = Employee(888, "Karen", 24, 300000)
 print(em.getSalary())
+
+
+class Shape:
+    def area(self):
+        print("Unnown")
+
+class Circle(Shape):
+    def area(self):
+        print("Circle area")
+
+class Square(Shape):
+    def area(self):
+        print("Square area")
+
+class Rectengle(Shape):
+    def area(self):
+        print("Rectengle area")
+
+
+shape = [Shape(), Circle(), Rectengle()]
+for Area in shape:
+    Area.area()
+"""
+num1 = input("arajin argument")
+if num1 == str(num1):
+    def arr():
+        print("str")
+elif num1 == int(num1):
+    def arr():
+        print("int")

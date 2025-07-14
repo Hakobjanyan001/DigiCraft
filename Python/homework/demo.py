@@ -1,4 +1,4 @@
-
+"""
 # comment -> for run python3 demo,py
 print("result`",5, sep="", end="")
 print(" new", " \" ", )
@@ -151,3 +151,45 @@ class Student(Person):
 st = Student("Karen", 24, 300000)
 st.sayHallo()
 
+#Run time Polimorfizm _________________________________________________
+class Animal:
+    def sound(self):
+        print("Animal Sound")
+
+class Dog:
+    def sound(self):
+        print("Dog Sound")
+
+animals = [Animal(), Dog()]
+for animal in animals:
+    animal.sound()
+
+#dinamik polimorfizm ______________________________________________
+
+class Animal:
+    def sound(self):
+        print("Animal Sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Dog Sound")
+
+class Cat(Animal):
+    def sound(self):
+        print("Cat Sound")
+
+def makeSound(animal: Animal): # (animal: Animal) asuma vor animaly Anymel typna u ov jarangela Animalic nra hamar ogtagorci makeSound funkcian, animal-ov cucenq talis vor sax  Animal tipi obyektner ti stana typery stugi
+    animal.sound()
+
+#def makeSound(animal): #angrafget greladezev
+#    animal.sound()
+
+makeSound(Animal())
+makeSound(Dog())
+makeSound(Cat())
+
+
+#built-in Polimorfizm _________________________________________________________
+print(len("A" + "B")) 
+print(len("8" + str(10))
+"""
