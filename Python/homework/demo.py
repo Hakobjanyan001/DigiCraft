@@ -1,4 +1,4 @@
-"""
+
 # comment -> for run python3 demo,py
 print("result`",5, sep="", end="")
 print(" new", " \" ", )
@@ -150,4 +150,4 @@ class Student(Person):
 
 st = Student("Karen", 24, 300000)
 st.sayHallo()
-"""
+
