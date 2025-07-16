@@ -50,7 +50,7 @@ while True:
 """
 
         
-List = []
+List = {}
 
 while True:
     print("For Add enther 1")
@@ -60,22 +60,43 @@ while True:
     print("For Update enther 5")
     print("For Exit enther 6")
     aa = str(input("Enther Yor answer: "))
+    
     if aa == "1":
-        name = str(input("Enther name: ")), str(input("Enther phone number: "))
-        List.append(name)
+        name = str(input("Enther name: ")) 
+        number = str(input("Enther phone number: "))
+        List[name] = number
+        print("\n")
+
     elif aa == "2":
         print(List)
+        print("\n")
+    
     elif aa == "3":
-        for x,y in List:
+        for x,y in List.items():
             name1 = str(input("enher name: "))
             if x == name1:
                 print(x, y)
+                print("\n")
+    
     elif aa == "4":
         delet = str(input("write your name for delete: "))
-        for x,y in list:
-            x == delet
-            List.remove(x,y)
+        if delet in List:     # in-ov knai Listi mej deletin tvac anuny ka te che 
+            del List[delet]
+            print("deleted \n")
+        else:
+            print("invalid name")
+
+    elif aa == "5":
+        update = str(input("enther name for update: "))
+        if update in List:
+            new_number = str(input("enther number for update: ")) 
+            List[update] = new_number
+            print(List)
+        else:
+            print("invalid name")
+        
     elif aa == "6":
         break
     else:
         print("unnown")
+        print("\n")
