@@ -84,10 +84,17 @@ shape = [Shape(), Circle(), Rectengle()]
 for Area in shape:
     Area.area()
 """
-num1 = input("arajin argument")
-if num1 == str(num1):
-    def arr():
+
+num1 = input("arajin argument: ")
+def arr(num1):
+    if type(num1) == str:
         print("str")
-elif num1 == int(num1):
-    def arr():
+    elif num1 == int(num1):
         print("int")
+    elif num1 == bool(num1):
+        print("bool")
+    elif num1 == float(num1):
+        print("float")
+    else:
+        print("list,set,tuple")
+

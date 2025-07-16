@@ -151,12 +151,16 @@ class Student(Person):
 st = Student("Karen", 24, 300000)
 st.sayHallo()
 
+
+"""
+
+
 #Run time Polimorfizm _________________________________________________
 class Animal:
     def sound(self):
         print("Animal Sound")
 
-class Dog:
+class Dog(Animal):
     def sound(self):
         print("Dog Sound")
 
@@ -191,5 +195,5 @@ makeSound(Cat())
 
 #built-in Polimorfizm _________________________________________________________
 print(len("A" + "B")) 
-print(len("8" + str(10))
+print(len("8" + str(10)))
 """
