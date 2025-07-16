@@ -1,100 +1,81 @@
 """
-num = int(input("grir qanaky Studenti: "))
-result = 0
+num1 = int(input("greq arajin argument: "))
+num2 = int(input("greq erkrord argument: "))
+operator = str(input("greq operator: "))
 
-def stugum(gnahatakan):
-    if gnahatakan < 50:
-      print("fail")
-    elif gnahatakan < 101:
-      print("pass")
+def calculator(num1, num2, argument):
+    if operator == "+":
+        return(num1+num2) 
+    elif operator == "-":
+        return(num1 - num2) 
+    elif operator == "/":
+        return(num1 / num2) 
+    elif argument == "*":
+        return(num1 * num2) 
     else:
-      print("gnahatakany 0ic 100 mijakayqum")
-
-for i in range(num):
-    anun = input("Studenti anun: ")
-    gnahatakan = int(input("Studenti gnahatakan: "))
-    result += gnahatakan
-    stugum(gnahatakan)
-gumar = result/num
-print(gumar)    
-________________________________________________________
-
-
-class Warke:
-
-#Ctr
-    def __init__(self, Id, name, age):
-        self._Id = Id
-        self._name = name
-        self._age = age
-
-#Str/gtr
-    def setId(self, Id):
-        self._Id = Id
-
-    def getId(self):
-        return self._Id
-        
-    def setName(self, name):
-        self._name = name
-
-    def getName(self):
-        return self._name
-                 
-    def setAge(self, age):
-        self._age = age
-
-    def getAge(self):
-        return self._age
-
-class Employee(Warke):
-    def __init__(self, Id, name, age, salary):
-        super().__init__(Id, name, age)
-        self._salary = salary
-    
-    def setSalary(self, salary):
-        self._salary = salary
-
-    def getSalary(self):
-        return self._salary
-   
-
-em = Employee(888, "Karen", 24, 300000)
-print(em.getSalary())
-
-
-class Shape:
-    def area(self):
         print("Unnown")
 
-class Circle(Shape):
-    def area(self):
-        print("Circle area")
-
-class Square(Shape):
-    def area(self):
-        print("Square area")
-
-class Rectengle(Shape):
-    def area(self):
-        print("Rectengle area")
+calculator(num1, num2, operator)
 
 
-shape = [Shape(), Circle(), Rectengle()]
-for Area in shape:
-    Area.area()
+
+import random
+goldenNum = random.randint(1,10)
+while True:
+    num1 = int(input("greq tiv: "))
+    if goldenNum != num1:
+        print("noric porceq")
+    else:
+        print("duq gtaq mtapahvac tivy")
+        break
+
+
+List = []
+
+while True:
+    print("For Add enther 1")
+    print("For View enther 2")
+    print("For Exit enther 3")
+    aa = str(input("Enther Yor answer: "))
+    if aa == "1":
+        task = str(input("Enther your tasky: "))
+        List.append(task)
+    elif aa == "2":
+        print(List)
+    elif aa == "3":
+        break
+    else:
+        print("unnown")
+
 """
 
-num1 = input("arajin argument: ")
-def arr(num1):
-    if num1 == str(num1):
-        print("str")
-    elif num1 == int(num1):
-        print("int")
-    elif num1 == bool(num1):
-        print("bool")
-    elif num1 == float(num1):
-        print("float")
-    else:
-        print("list,set,tuple")
+        
+List = []
 
+while True:
+    print("For Add enther 1")
+    print("For View enther 2")
+    print("For Search enther 3")
+    print("For Delete enther 4")
+    print("For Update enther 5")
+    print("For Exit enther 6")
+    aa = str(input("Enther Yor answer: "))
+    if aa == "1":
+        name = str(input("Enther name: ")), str(input("Enther phone number: "))
+        List.append(name)
+    elif aa == "2":
+        print(List)
+    elif aa == "3":
+        for x,y in List:
+            name1 = str(input("enher name: "))
+            if x == name1:
+                print(x, y)
+    elif aa == "4":
+        delet = str(input("write your name for delete: "))
+        for x,y in list:
+            x == delet
+            List.remove(x,y)
+    elif aa == "6":
+        break
+    else:
+        print("unnown")

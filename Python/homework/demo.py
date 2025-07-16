@@ -1,4 +1,3 @@
-"""
 # comment -> for run python3 demo,py
 print("result`",5, sep="", end="")
 print(" new", " \" ", )
@@ -152,7 +151,6 @@ st = Student("Karen", 24, 300000)
 st.sayHallo()
 
 
-"""
 
 
 #Run time Polimorfizm _________________________________________________
@@ -196,4 +194,3 @@ makeSound(Cat())
 #built-in Polimorfizm _________________________________________________________
 print(len("A" + "B")) 
 print(len("8" + str(10)))
-"""
