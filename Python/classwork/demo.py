@@ -87,7 +87,7 @@ for Area in shape:
 
 num1 = input("arajin argument: ")
 def arr(num1):
-    if type(num1) == str:
+    if num1 == str(num1):
         print("str")
     elif num1 == int(num1):
         print("int")
