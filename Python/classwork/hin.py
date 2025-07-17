@@ -48,7 +48,7 @@ class Warke:
         return self._age
 
 class Employee(Warke):
-    def __init__(self, Id, name, age, salary):
+   def __init__(self, Id, name, age, salary):
         super().__init__(Id, name, age)
         self._salary = salary
     
@@ -84,19 +84,21 @@ shape = [Shape(), Circle(), Rectengle()]
 for Area in shape:
     Area.area()
 
-
-num1 = input("arajin argument: ")
-def arr(num1):
-    if num1 == str(num1):
-        print("str")
-    elif num1 == int(num1):
-        print("int")
-    elif num1 == bool(num1):
-        print("bool")
-    elif num1 == float(num1):
-        print("float")
-    else:
-        print("list,set,tuple")
 """
 
+num1 = input("arajin argument: ")
+def arr(value):
+    try:
+        val = int(value)
+        print("int")
+    except ValueError:
+        try:
+            val = float(value)
+            print("float")
+        except ValueError:
+            if value.lower() == "true" or value.lower() == "false":
+                print("bool")
+            else:
+                print("list,set,tuple")
+arr(num1)
 
