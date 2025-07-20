@@ -138,7 +138,7 @@ int arr(int& a){
 	std::cout << a * a << std::endl;
 	return a * a;
 
-*/
+
 
 int arr(int* a);
 
@@ -149,4 +149,21 @@ int main() {
 	int a = 5;
 	arr(&a);
 	std::cout << a  << std::endl;
+}
+
+*/
+
+void foo(int a[], int& z);
+
+int main() {
+	int lenght = 5;
+	int arr[lenght] = {15, 25, 35, 45, 55};
+	foo(arr, lenght);
+	return 0;
+}
+
+void foo(int a[], int& z) {
+	for(int i = 0; i < z; i++) {
+		std::cout << a[i] << std::endl;
+	}
 }

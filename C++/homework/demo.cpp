@@ -2,6 +2,10 @@
 #include <string>
 
 int main() {
-	std::cout << sizeof(int) << std::endl;	
+	int a = 5;
+	char x[a] = {'H', 'e', 'l', 'l', 'o'};
+		for(int i = 0; i < a; i++ ) {
+		std::cout << x[i] << std::endl;
+		}
 	return 0;
 }
