@@ -194,3 +194,61 @@ makeSound(Cat())
 #built-in Polimorfizm _________________________________________________________
 print(len("A" + "B")) 
 print(len("8" + str(10)))
+
+
+#GLOBAL________________________________________________________________________
+x = 100
+
+def change():
+    global x # sa nuyn verevi x-na poxancum u 2 print(x)->nel ktpi 200
+    x = 200
+    print(x)
+
+change()
+print(x)
+
+
+#MATCH C++-i switch() case: ->e ___________________________________________________
+day = 1
+month = 3
+match day:
+    case 1 | 11 | 111 if month == 3: #kashxati ete (1 kam 11 kam 111) ev amisne 3 a
+        print("Monday")
+    case 2:
+        print("Ereqsh")
+    case 3:
+        print("Choreq")
+    case 4:
+        print("Hingsh")
+    case _:
+        print("Urbat")
+
+
+#TYPE-> stuguma popoxakany ira tipi het ____________________________________
+x = 100
+isInt = isinstance(x, int)
+print(isInt)
+
+if isInt:
+    print("integer")
+
+
+#LAMBDA-> C++ i lambda ____________________________________________________
+def f(): # funkcia vory generacnume mek ayl funkcia
+    return lambda x: x * x
+
+res = f()
+print(res(10)) # -> ktpi 100
+
+#______________________________
+l = lambda a, b: a + b # -> sa sarquma lambda funkcia anuny -> "l" chi ogtagorcvum
+print(l(10,20))
+
+#_____________________________
+def f(n): #-> f(n) = f(2) kam f(3)
+    return lambda x: x * n #-> x = doubler(10) kam tripler(10)
+doubler = f(2)  # 2 * 10
+tripler = f(3)  # 3 * 10
+print(doubler(10))
+print(tripler(10))
+
