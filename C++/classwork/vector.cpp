@@ -64,5 +64,6 @@ std::cout << "zangvaci mej azat indeqsneri chapy :" << vector->capacity() << "\n
 vector->clear();
 std::cout << "zangvaci chapy clear()-ic heto: " << vector->size() << std::endl;
 
+delete vector;
 return 0;
 }
