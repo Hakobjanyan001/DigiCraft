@@ -41,7 +41,7 @@ class My_vector{
 
 	void clear () {m_size = 0;}
 
-	int add(int a) {return m_arr[a];}
+	int at(int a) {return m_arr[a];}
 };
 
 int main(){
@@ -50,7 +50,7 @@ My_vector* vector = new My_vector();
 
 for(int i = 0; i < 5; i++ ){
 	vector->push_back(i * 2);
-	std::cout << i << "-erord andamy: " <<  vector->add(i) << std::endl;
+	std::cout << i << "-erord andamy: " << vector->at(i) << std::endl;
 }
 
 std::cout << "\nzangvaci chapy: " << vector->size() << "\n" << std::endl;
