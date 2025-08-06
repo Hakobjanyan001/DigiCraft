@@ -24,7 +24,7 @@ class My_vector{
 	
 	void push_back( int a ) {
 		if(m_size == m_capacity) {
-			resize( m_capacity == 0 ? 1 : m_size * 2 );
+			resize( m_capacity == 0 ? 1 : m_capacity*2);
 		}	
 		m_arr[m_size++] = a;
 	}
