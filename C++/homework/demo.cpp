@@ -127,6 +127,8 @@ void userMenu();
 
 int main() {
 	loginMenu();
+	Book b;
+	b.addBook();
 	return 0;
 }
 
