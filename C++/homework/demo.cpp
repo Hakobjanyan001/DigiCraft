@@ -26,7 +26,13 @@ private:
 	}
 
 public:
-	Book(int id, std::string title, std::string autor, std::string genre) : m_id(id), m_title(title), m_author(autor), m_genre(genre), m_totalCopies(3)/*, m_availableCopies("???????")*/ {}
+	Book(int id, std::string title, std::string autor, std::string genre) : 
+		 m_id(id), 
+		 m_title(title), 
+   		 m_author(autor), 
+         m_genre(genre), 
+		 m_totalCopies(3),
+		 m_availableCopies(3) {}
 	Book() : m_id(0), m_title(""), m_author(""), m_genre(""), m_totalCopies(0), m_availableCopies(0) {}
 	~Book() {delete [] m_arr;}
 	
