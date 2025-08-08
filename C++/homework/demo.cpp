@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+
  class Book{
 private:
 	int m_id;
@@ -14,7 +15,6 @@ private:
 	int m_size;
 	int m_capacity;
 
-	std::vector<Book>books;
 
 public:
 	Book(int id, std::string title, std::string author, std::string genre, int copies = 3) : 
@@ -24,26 +24,16 @@ public:
          m_genre(genre), 
 		 m_totalCopies(copies),
 		 m_availableCopies(copies) {}
-	Book() : m_id(0), m_title(""), m_author(""), m_genre(""), m_totalCopies(0), m_availableCopies(0) {}
+	Book() : 
+		m_id(0),
+	   	m_title(""), 
+		m_author(""), 
+		m_genre(""), 
+		m_totalCopies(0), 
+		m_availableCopies(0) {}
 	~Book() {}
 	
 
-	void addBook() {
-       		int id;
-		std::string title, author, genre;
-		std::cout << "write new book data" << std::endl;
-		std::cout << "id" << std::endl;
-		std::cin >> id;	
-		std::cout << "Title" << std::endl;	
-		std::cin >> title;
-		std::cout << "Auther" << std::endl;
-		std::cin >> author;
-		std::cout << "Genre" << std::endl;
-		std::cin >> genre;
-		Book book(id, title, author, genre);
-		std::cout << "New book added" << std::endl;
-		books.push_back(Book(id, title, author, genre));
-	}
 
 	
 	void showBook() {
@@ -58,9 +48,9 @@ public:
 	void borrowBook() { 
 		if(m_availableCopies > 0 ) {
 		m_availableCopies--;
-		return true;
+		}else {
+			std::cout << "No copies book" << std::endl;
 		}
-		return false;
 	}
 	
 	void returnBook() {
@@ -71,7 +61,7 @@ public:
 		}
 	}
 	
-	int getID() {return m_id;}
+	int getId() {return m_id;}
 	
 	std::string getTitle() {return m_title;}
 
@@ -87,7 +77,7 @@ struct Person{
 
 
 
-class User : public Person{
+class User {
 private:
 	std::string m_username;
 	std::string m_password;
@@ -98,16 +88,51 @@ public:
 	User() : m_username("user"), m_password("user123"){}
 	~User() {}
 
-    void registerUser() {}
+    void registerUser() {
+		std::string uname = "";
+		std::string pass = "";
+		std::cout << "Write User login" << std::endl;
+		std::cin >> uname;
+		std::cout << "Write User passwd" << std::endl;
+		std::cin >> pass;
+		login(uname, pass) == true 
+			   	? std::cout << "pass" << std::endl 
+				: std::cout << "not pass" << std::endl;
+	}
    
    	bool login(std::string uname, std::string pass) {
 			return (uname == m_username && pass == m_password);
 			
 	}
    
-   	void borrowBook(Book books[], int totalBooks) {}
+   	void borrowBook(Book books[], int totalBooks) {
+		int id;
+		std::cout << "Enter book ID to borrow" << std::endl;
+		std::cin >> id;
+		for(int i = 0; i < totalBooks; i++) {
+				if(books[i].getId() == id){
+					books[i].borrowBook();
+		            std::cout << "You borrowed: " << books[i].getTitle() << std::endl;
+					break;
+				}
+		}
+		std::cout << "Book not found" << std::endl;
+
+	}
    
-   	void returnBook(Book books[], int totalBooks) {}
+   	void returnBook(Book books[], int totalBooks) {
+		int id;
+		std::cout << "For return enther book id" << std::endl;
+		std::cin >> id;
+		for(int i = 0; i < totalBooks; i++) {
+			if(books[i].getId() == id){
+				books[i].returnBook();
+ 				std::cout << "You returned: " << books[i].getTitle() << std::endl; 
+				break;
+			}
+		}
+	   	std::cout << "Book not found!" << std::endl;
+	}
    
    	void viewBorrowedBooks(Book books[], int totalBooks) {}
 };
@@ -116,15 +141,44 @@ public:
 
 
 
-class Admin : public Person{
+class Admin {
 private:
 	std::string adminname;
 	std::string password;
 public:
     void addBook(Book books[], int &totalBooks) {
+		int id;
+		std::string title, author, genre;
+		std::cout << "write new book data" << std::endl;
+		std::cout << "id" << std::endl;
+		std::cin >> (id);
+		std::cin.ignore();	
+		std::cout << "Title" << std::endl;	
+		std::getline(std::cin, title);
+		std::cout << "author" << std::endl;
+		std::getline(std::cin, author);
+		std::cout << "Genre" << std::endl;
+		std::getline(std::cin ,genre);
+		books[totalBooks] = Book book(id, title, author, genre);
+		totalBooks++;
+		std::cout << "New book added" << std::endl;
 	}
 
-	void removeBook(Book books[], int &totalBooks) {}
+	void removeBook(Book books[], int &totalBooks) {
+			int id;
+			std::cout << "For remove enther book id"  << std::endl;
+			std::cin >> id;
+			for(int i = 0; i < totalBooks; i++){
+				if(books[i].getId() ==  id) {
+					for(int j = i; j < totalBooks - 1; j++){
+							books[j] = books[j + 1];
+					}
+					totalBooks--;
+					std::cout << "Book removed" << std::endl;
+					break;
+				}
+			}
+	}
     
 	void viewAllBooks(Book books[], int totalBooks) {}
 
@@ -132,22 +186,47 @@ public:
 };
 
 
+class Library {
+	private:
+	std::vector<Book>myBooks;
+	public:
+	void addBook() {
+       	int id;
+		std::string title, author, genre;
+		std::cout << "write new book data" << std::endl;
+		std::cout << "id" << std::endl;
+		std::cin >> (id);	
+		std::cin.ignore();
+		std::cout << "Title" << std::endl;	
+		std::getline(std::cin, title);
+		std::cout << "author" << std::endl;
+		std::getline(std::cin, author);
+		std::cout << "Genre" << std::endl;
+		std::getline(std::cin ,genre);
+		Book book(id, title, author, genre);
+		std::cout << "New book added" << std::endl;
+		myBooks.push_back(Book(id, title, author, genre));
+	}
+};
+
+
+
 void loginMenu();
 void adminMenu();
 void userMenu();
 
+
+
 int main() {
 	loginMenu();
-	Book b;
-	b.addBook();
 	return 0;
 }
 
 
 void loginMenu() {
 	std::cout << "___Welcome to Library___\n"
-	 "For Admin enter Admin\n"
-	 "For Users enter User" << std::endl;
+	<< " For Admin enter Admin\n"
+	<< " For Users enter User" << std::endl;
 	std::string answer = "";
 	std::cin >> answer;
 	std::string login = "";
@@ -160,7 +239,7 @@ void loginMenu() {
 		std::cin >> passwd;
 			if(login == "admin" && passwd == "admin123") {
 					std::cout << "Welcome to Library admin" << std::endl;
-					//AdminMenu();
+ 					adminMenu();
 					break;		
 				}else {
 					std::cout << "Unknown login or passwd" << std::endl;
@@ -173,11 +252,63 @@ void loginMenu() {
 	std::cin >> passwd;
 		if(login == "user" && passwd == "user123") {
 		std::cout << "Welcome to Libery User" << std::endl;
-		//UserMenu();
+ 		userMenu();
 			}else {
 			std::cout << "Unknown login or passwd" << std::endl;
 			}
 		}else {
 				std::cout << "Unknown answer" << std::endl;
 			}
+}
+
+
+
+void adminMenu(books[], &totalBooks, Users[]) {
+	Admin admin;
+	std::string answer = "";
+	while(answer != "exit") {
+	std::cout << "For add book enther 1:\n" 
+		<< "For remove book enther 2:\n"
+		<< "For view all book enther 3:\n"
+		<< "For view Users  enther 4:\n"
+		<< "For exit enther exit" << std::endl;
+		if(answer == "1") {
+			admin.addBook(books[], totalBooks);
+		}else if(answer == "2") {
+			admin.removeBook(books[], totalBooks);
+		}else if(answer == "3") {
+			admin.viewAllBooks(books[], totalBooks);
+		}else if(answer == "4") {
+			admin.viewUsers(users[], totalUsers);
+		}else if(answer == "exit"){
+			break;
+		}else {
+			std::cout << "Unknown answer" << std::endl;
+		}
+	}
+}
+
+
+
+
+void userMenu(books[], totalBooks) {
+	User user;
+	std::string answer = "";
+	while(answer != "exit") {
+	std::cout << "For borrow book enther 1:\n"
+		<< "For return book enther 2:\n"
+		<< "For view borrowed book enther 3:\n"
+		<< "For exit enther exit" << std::endl;
+		if(answer == "1") {
+			user.borrowBook(books[], totalBooks)
+		}else if(answer == "2") {
+			user.returnBook(books[], totalBooks)
+		}else if(answer == "3") {
+			user.viewBorrowedBooks(books[], totalBooks)
+		}else if(answer == "exit") {
+			break;
+		}else {
+			std::cout << "Unknown answer" << std::endl;
+		}
+	}
 }
