@@ -70,7 +70,7 @@ private:
 				<<"TotalCopies:" << m_totalCopies << std::endl;
 	}
 	
-	void borrowBook() {   // Fhis function to borrow a book
+	void borrowBook() {   // This function to borrow a book
 		if(m_availableCopies > 0 ) {
 		m_availableCopies--;
 		}else {
