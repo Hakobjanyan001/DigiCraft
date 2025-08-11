@@ -301,10 +301,10 @@ int main() {
 
 //Utility
 void loginMenu() {
-	Book books[1000];
+	Book* books;
 	int totalBooks = 0;
 
-	User users[10];
+	User* users;
 	int totalUsers = 0;
 
 	std::cout << "___Welcome to Library___\n"
