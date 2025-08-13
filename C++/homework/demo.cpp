@@ -178,32 +178,32 @@ class User {
 	
 	// Public API
 	void registerUser(Book books[], int& totalBooks) {
-	std::string name, surname, city, username, passwd;
-	int age;
+			std::string name, surname, city, username, passwd;
+			int age;
 
-	    std::cout << "Write Your Name" << std::endl;
-		std::cin >>name;
-	    std::cout << "Write Your Surname" << std::endl;
-		std::cin >> surname;
-	    std::cout << "Write Your Age" << std::endl;
-		std::cin >> age;
-	    std::cout << "Write Your City" << std::endl;
-		std::cin >> city;
-		std::cout << "Write User Username (login)" << std::endl;
-		std::cin >> username;
-		std::cout << "Write User Password (passwd)" << std::endl;
-		std::cin >> passwd;
-	
-		Person newPerson(name, surname, age, city, username, passwd);
-		myPerson.push_back(newPerson);
+			std::cout << "Write Your Name" << std::endl;
+			std::cin >>name;
+			std::cout << "Write Your Surname" << std::endl;
+			std::cin >> surname;
+			std::cout << "Write Your Age" << std::endl;
+			std::cin >> age;
+			std::cout << "Write Your City" << std::endl;
+			std::cin >> city;
+			std::cout << "Write User Username (login)" << std::endl;
+			std::cin >> username;
+			std::cout << "Write User Password (passwd)" << std::endl;
+			std::cin >> passwd;
 
-		if(login(username, passwd)){ 
-		       	std::cout << "pass" << std::endl;
+			Person newPerson(name, surname, age, city, username, passwd);
 			myPerson.push_back(newPerson);
-			newPerson.totalUsers++;
-			userMenu(books, totalBooks);
+
+			if(login(username, passwd)){ 
+					std::cout << "pass" << std::endl;
+					myPerson.push_back(newPerson);
+					newPerson.totalUsers++;
+					userMenu(books, totalBooks);
 			} else {
-				std::cout << "Not found User" << std::endl;
+					std::cout << "Not found User" << std::endl;
 			}
 	}
   
