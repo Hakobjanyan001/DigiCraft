@@ -1,28 +1,83 @@
 #include <iostream>
 #include <string>
-struct Node {
-	int m_data; 
-	Node* m_next; // cucich depi hajord Node
-
-	Node(int value) : m_data(value), m_next(nullptr) {}
-	~Node() {}
-};
 
 class linkedList {
+// Node Struct
 private:
-	Node* m_head; // cucich depi arajin Node
-	
-public:
-	linkedList() : m_head(nullptr) {}
-	~linkedList() {}
+struct Node {
+	public:
+		int m_data; 
+		Node* m_next; 
 
-	void push_front(int value) {
+		Node(int value) : m_data(value), m_next(nullptr) {}
+		~Node() {}
+};
+
+// Member Data
+private:
+Node* m_head;
+int m_size;
+public:
+	linkedList() : m_head(nullptr), m_size(0) {}
+	~linkedList() {
+			while(m_head) {
+				Node* tmp = m_head;
+				m_head = m_head->m_next;
+				delete tmp;
+			}
+	}
+//Public API
+	public:
+	void push_back(int value) {
 		Node* newNode = new Node(value);
-		newNode->m_next = m_head;
+		if(!m_head) {
 		m_head = newNode;
+		}else {
+			Node* curr = m_head;
+			while(curr->m_next) {
+				curr = curr->m_next;
+			}
+			m_size++;
+		}
+	}
+	void pop_back() {
+		if(!m_head) {
+			return;
+		}
+		if(!m_head->m_next) {
+			delete m_head;
+			m_head = nullptr;
+		} else {
+			Node* curr = curr->m_next;
+			while(curr->m_next) {
+				curr = curr->m_next;
+			}
+			delete curr->m_next;
+			curr->m_next = nullptr;
+		}
+		m_size--;
+	}
+
+	int size() {return m_size;}
+
+	int at(int value) {
+		Node* curr = m_head;
+			for(int i = 0; i < value; i++) {
+				curr = curr->m_next;
+			}
+			return curr->m_data;
 	}
 };
 
 int main() {
+linkedList* myList = new linkedList();
+myList->push_back(7);
+myList->push_back(41);
+myList->push_back(23);
+std::cout << myList->at(2) << std::endl;
+std::cout << myList->size() << std::endl;
+myList->pop_back();
+std::cout << myList->at(1) << std::endl;
+std::cout << myList->size() << std::endl;
 	return 0;
 }

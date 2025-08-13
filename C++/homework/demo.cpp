@@ -2,6 +2,18 @@
 #include <string>
 #include <vector>
 
+// Declaration
+
+class Book; 
+class User; 
+class Admin;
+class Library;
+struct Person;
+
+
+void loginMenu();
+void userMenu(Book books[], int totalBooks);
+void adminMenu(Book books[], int &totalBooks, User users[], int totalUsers);
 
  class Book{
 // Member Data
@@ -98,19 +110,43 @@ private:
 
 // Person Struct
 struct Person{
+	private:
 	//Member Data
 	
-	std::string m_name, m_surname;
-	int totalUsers;
+	std::string m_name, m_surname, m_city, m_username, m_passwd;
+	int m_age;
 	
+	public:
+	int totalUsers;
 	//Special functions 	
 	Person() : 
-	       	m_name(""), 
-		m_surname("") {}
+	       	m_username("user"), 
+		m_passwd("user123") {}
+
 	
-	Person (std::string name, std::string surname) :
-	       	m_name(name), 
-		m_surname(surname) {}
+	Person(	std::string name,
+		std::string surname,
+		int age,
+		std::string city,
+		std::string username,
+		std::string passwd) :
+		m_name(name),
+		m_surname(surname),
+		m_age(age),
+		m_city(city),
+		m_username(username),
+		m_passwd(passwd) {}
+
+	
+	~Person() {}
+	
+	
+	std::string getUsername() {return m_username;}
+	std::string getPasswd() {return m_passwd;}
+
+	std::string getName () {return m_name;}
+	std::string getSurname () {return m_surname;}
+
 
 };
 
@@ -122,46 +158,57 @@ class User {
 
 	// Member Data
 	private:
-	std::string m_username;
-	std::string m_password;
+	const std::string m_uname = "user";
+	const std::string m_pass = "user123";
 	int borrowedBookIDs[3]; 
 	int borrowDates[3];    
 
-	std::vector<Person> users;
-	Person per;
-	int totalUsers = 0;
+	std::vector<Person> myPerson;
 
 	//Special functions 
 	public:
-	User() : m_username("user"), m_password("user123"){}
+	User() {}
+
 	~User() {}
 
-	std::string getName() {return per.m_name;}
-	std::string getSurname() {return per.m_surname;}
-
+	Person newPerson;
+	
+	std::string getName () {return newPerson.getName();}
+	std::string getSurname () {return newPerson.getSurname();}
+	
 	// Public API
-	void registerUser() {
-	    	std::cout << "Write Your Name" << std::endl;
-		std::cin >> per.m_name;
-	    	std::cout << "Write Your Surname" << std::endl;
-		std::cin >> per.m_surname;
-		std::string uname = "";
-		std::string pass = "";
-		std::cout << "Write User name" << std::endl;
-		std::cin >> uname;
-		std::cout << "Write User passwd" << std::endl;
-		std::cin >> pass;
-		if(login(uname, pass)){ 
+	void registerUser(Book books[], int& totalBooks) {
+	std::string name, surname, city, username, passwd;
+	int age;
+
+	    std::cout << "Write Your Name" << std::endl;
+		std::cin >>name;
+	    std::cout << "Write Your Surname" << std::endl;
+		std::cin >> surname;
+	    std::cout << "Write Your Age" << std::endl;
+		std::cin >> age;
+	    std::cout << "Write Your City" << std::endl;
+		std::cin >> city;
+		std::cout << "Write User Username (login)" << std::endl;
+		std::cin >> username;
+		std::cout << "Write User Password (passwd)" << std::endl;
+		std::cin >> passwd;
+	
+		Person newPerson(name, surname, age, city, username, passwd);
+		myPerson.push_back(newPerson);
+
+		if(login(username, passwd)){ 
 		       	std::cout << "pass" << std::endl;
-			users.push_back(per);
-			per.totalUsers++;
-			}else {
-			std::cout << "not pass" << std::endl;
+			myPerson.push_back(newPerson);
+			newPerson.totalUsers++;
+			userMenu(books, totalBooks);
+			} else {
+				std::cout << "Not found User" << std::endl;
 			}
 	}
-   
-   	bool login(std::string uname, std::string pass) {
-			return (uname == m_username && pass == m_password);
+  
+   	bool login(std::string& uname, std::string& pass) {
+			return (uname == newPerson.getUsername() && pass == newPerson.getPasswd());
 			
 	}
    
@@ -186,12 +233,23 @@ class User {
 	}
    
    	void returnBook(Book books[], int totalBooks) {
+		std::cout << "Write day borrow Book " <<  std::endl;
+		int dayBorrowBook;
+		std::cin >> dayBorrowBook;	
 		int id;
+		int allDay = 7;
+		int fine = 500; 
 		std::cout << "For return enther book id" << std::endl;
 		std::cin >> id;
 		for(int i = 0; i < totalBooks; i++) {
 			if(books[i].getId() == id){
 				books[i].returnBook();
+				if(dayBorrowBook > allDay){
+					int debt = dayBorrowBook - allDay;
+					int ollFine = fine * debt;
+					std::cout << "User fine " << ollFine << " dram" << std::endl;
+ 					std::cout << "You returned: " << books[i].getTitle() << std::endl; 
+				}
  				std::cout << "You returned: " << books[i].getTitle() << std::endl; 
 				break;
 			}
@@ -287,11 +345,6 @@ class Library {
 
 };
 
-//Utility
-void loginMenu();
-void adminMenu(Book books[], int &totalBooks, User users[], int totalUsers);
-void userMenu(Book books[], int totalBooks);
-
 
 
 int main() {
@@ -329,31 +382,11 @@ void loginMenu() {
 					}
 		}
 	}else if(answer == "User" || answer == "user") {
-	std::cout << "Write User login" << std::endl;
-	std::cin >> log;
-	std::cout << "Write User passwd" << std::endl;
-	std::cin >> passwd;
-		if(log == "user" && passwd == "user123") {
-		std::cout << "Welcome to Libery User" << std::endl;
-		User u;
-    		u.registerUser();
-		std::string uname, pass;
-		std::cout << "Enter User name" << std::endl;
-		std::cin >> uname;
-		std::cout << "Enter passwd " << std::endl;
-		std::cin >> pass;
-   		if(u.login(uname, pass)) {
-			std::cout << "login successful" << std::endl;
-		}else {
-			std::cout << "login failed" << std::endl;
+		User newUser;
+    		newUser.registerUser(books, totalBooks);
+	}else {
+			std::cout << "Unknown answer" << std::endl;
 		}
-		userMenu(books, totalBooks);
-			}else {
-			std::cout << "Unknown login or passwd" << std::endl;
-			}
-		}else {
-				std::cout << "Unknown answer" << std::endl;
-			}
 }
 
 
@@ -361,9 +394,9 @@ void loginMenu() {
 //Utility
 void adminMenu(Book books[], int &totalBooks, User users[], int totalUsers) {
 	Admin* admin = new Admin();
-	std::string answer = "";
+	int answer;
 	
-	while(answer != "exit") {
+	while(true) {
 	std::cout << "For add book enther 1:\n" 
 		<< "For remove book enther 2:\n"
 		<< "For view all book enther 3:\n"
@@ -371,21 +404,27 @@ void adminMenu(Book books[], int &totalBooks, User users[], int totalUsers) {
 		<< "For exit enther exit" << std::endl;
 		std::cin >> answer;
 		
-		if(answer == "1") {
+		switch(answer){
+		case 1:	
 			admin->addBook(books, totalBooks);
-		}else if(answer == "2") {
-			admin->removeBook(books, totalBooks);
-		}else if(answer == "3") {
-			admin->viewAllBooks(books, totalBooks);
-		}else if(answer == "4") {
-			admin->viewUsers(users, totalUsers);
-		}else if(answer == "exit"){
 			break;
-		}else {
+		case 2:
+			admin->removeBook(books, totalBooks);
+			break;
+		case 3:
+			admin->viewAllBooks(books, totalBooks);
+			break;
+		case 4:
+			admin->viewUsers(users, totalUsers);
+			break;
+		case 0:
+			delete admin;
+			break;
+		default:
 			std::cout << "Unknown answer" << std::endl;
+			break;
 		}
 	}
-	delete admin;
 }
 
 
@@ -394,26 +433,31 @@ void adminMenu(Book books[], int &totalBooks, User users[], int totalUsers) {
 //Utility
 void userMenu(Book books[], int totalBooks) {
 	User* user = new User();
-	std::string answer = "";
+	int answer;
 	
-	while(answer != "exit") {
+	while(true) {
 	std::cout << "For borrow book enther 1:\n"
 		<< "For return book enther 2:\n"
 		<< "For view borrowed book enther 3:\n"
-		<< "For exit enther exit" << std::endl;
+		<< "For exit enther 0" << std::endl;
 		std::cin >> answer;
 	
-		if(answer == "1") {
+		switch(answer){
+		case 1:
 			user->borrowBook(books, totalBooks);
-		}else if(answer == "2") {
-			user->returnBook(books, totalBooks);
-		}else if(answer == "3") {
-			user->viewBorrowedBooks(books, totalBooks);
-		}else if(answer == "exit") {
 			break;
-		}else {
+		case 2:
+			user->returnBook(books, totalBooks);
+			break;
+		case 3:
+			user->viewBorrowedBooks(books, totalBooks);
+			break;
+		case 0:
+			delete user;
+			return;
+		default:
 			std::cout << "Unknown answer" << std::endl;
+			break;
 		}
 	}
-	delete user;
 }
