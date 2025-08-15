@@ -212,8 +212,10 @@ class User : public Person{
 			std::cin >> passwd;
 
 			User newUser(name, surname, age, city, username, passwd);
+			std::string uname = "user";
+			std::string pass = "user123";
 
-			if(login(username, passwd)){ 
+			if(newUser.login(uname, pass)){ 
 					std::cout << "pass" << std::endl;
 					myUser.push_back(newUser);
 					Person newPerson;
@@ -225,7 +227,7 @@ class User : public Person{
 	}
   
    	bool login(std::string& uname, std::string& pass) {  
-			return (uname == getUsername() && pass == getPasswd());
+			return (uname == m_username && pass == m_passwd);
 			
 	}
    
@@ -409,13 +411,13 @@ void openLoginMenu() {
 	}else if(answer == "User" || answer == "user") {
 		User newUser;
     		newUser.registerUser();
-		std::string uname = "user";
-		std::string pass = "user123";
-		if(newUser.login(uname, pass)){
-			openUserMenu();
-			return ;
-		}
-	}else {
+//		std::string uname = "user";
+//		std::string pass = "user123";
+//		if(newUser.login(uname, pass)){
+//			openUserMenu();
+//			return ;
+		}else{
+//	}else {
 			std::cout << "Unknown answer" << std::endl;
 		}
 }
