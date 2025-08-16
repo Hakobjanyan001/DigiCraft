@@ -45,7 +45,7 @@ public:
 
 	int size() {return m_size;}
 	
-	int get() {return m_topNode->value;}
+	int get() {return m_topNode->m_value;}
 	
 	bool isEmpty() { return m_topNode = nullptr;}
 };
