@@ -2,22 +2,26 @@
 #include <string>
 
 class Tree {
-//Public API
-public:
-	void insert(int val) {
-		m_root = insertInner(m_root, val)
-		insertInner();
-	} 
+//Helper Struct
+private:
+	struct Node{
+	public:
+		Node(int val) : value(val), left(nullptr), righet(nullptr) {}
+	int value;
+	Node* left;
+	Node* righet;
+	};
+	
+	Node* m_root;
 
 //Helper Functions
 private:
-	}
 
 	Node* insertInner(Node* node, int val) {
 		if( node == nullptr) {
 			return new Node(val);
 		}
-		if(val < node->val ) {
+		if(val < node->value ) {
 			node->left = insertInner(node->left, val);
 			return insertInner(node, val);
 		} else {
@@ -27,16 +31,23 @@ private:
 		return node;
 	}
 
-//Helper Struct
-private:
-	Node* m_root;
-	struct Node{
-	private:
-		node(int val) : value(val), left(nullptr), righet(nullptr) {}
-	int value;
-	Node* left;
-	Node* righet;
-	};
+//Public API
+public:
+	void insert(int val) {
+		m_root = insertInner(m_root, val);
+	}
+
+	void inOrder(Node* node) {
+	if(node == nullptr){
+		return ;
+	}
+	inOrder(node->left);
+	std::cout << node->value << std::endl;
+	inOrder(node->righet);
+	}	
+
+
+
 public:
 	Tree() : m_root(nullptr) {}
 	~Tree() {
@@ -47,6 +58,8 @@ public:
 	Tree = tmp;
 	}
 	}
+
+
 };
 
 int main() {
@@ -56,5 +69,6 @@ myTree->insert(20);
 myTree->insert(2);
 myTree->insert(70);
 myTree->insert(0);
+myTree->inOrder();
 	return 0;
 }
