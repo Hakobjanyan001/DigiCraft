@@ -6,6 +6,20 @@ struct Node;
 
 //Public API
 public:
+	Tree() : m_root(nullptr) {}
+	~Tree() {
+		deleteNode(m_root);
+		}
+
+	void deleteNode(Node* node) {
+	if(node == nullptr){
+		return;
+	}
+	deleteNode(node->left);
+	deleteNode(node->righet);
+	}
+
+	
 	void insert(int val) {
 		m_root = insertInner(m_root, val);
 	}
@@ -45,7 +59,6 @@ private:
 		preOrder(node->left);
 		preOrder(node->righet);
 	}
-	}
 	
 	void inOrder(Node* node) {
 	if( node == nullptr) {
@@ -54,7 +67,6 @@ private:
 		inOrder(node->left);
 		std::cout << node->value << std::endl;
 		inOrder(node->righet);
-	}
 	}
 
 	void postOrder(Node* node) {
