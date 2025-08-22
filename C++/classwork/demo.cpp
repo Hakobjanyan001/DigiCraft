@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+/*
 class Kotorak {
 //Member data
 private:
@@ -98,7 +99,104 @@ delete ko1;
 delete ko2;
 delete ko3;
 delete ko4;
-//delete ko5;
-//delete ko6;
+delete ko5;
+delete ko6;
+	return 0;
+}
+*/
+
+class Havasarum{
+
+//Public API
+	public:
+
+	void insert(int prefex, int exp){
+		if(prefex == 0){
+			return;
+		}
+		Node* newNode = new Node( prefex, exp );
+		newNode->m_next = m_head;
+		m_head = newNode;
+	}
+
+	void display() {
+		if ( m_head == nullptr ) {
+			std::cout << 0 << std::endl;
+			return;
+		}
+		Node* curr = m_head;
+		while( curr != nullptr ) {
+			std::cout << curr->m_prefex << "x^" << curr->m_exp;
+			if( curr->m_next != nullptr ) {
+			std::cout << "+";
+		}
+		curr = curr->m_next;
+		}
+		std::cout << "" << std::endl;
+	}
+
+
+	int evaluate(int value){
+		if ( m_head == nullptr ) {
+			return 0;
+		}
+		int sum = 0;
+		Node* curr = m_head;
+		while( curr != nullptr ) {
+			sum += curr->m_prefex + expponent(value, curr->m_exp);
+			curr = curr->m_next;
+		}
+		return sum;
+		}
+
+//Helper Functions
+private:
+	int expponent(int base, int exp) {
+		if( exp == 0 ) { return 1; }
+		int sum = 1;
+		for(int i = 0; i < exp; i++ ){
+			sum *= base;
+		}
+		return sum;
+	}
+	
+//Struct Node
+private:	
+struct Node {
+	//Member data
+	public:
+		Node* m_next;
+		int m_prefex;
+		int m_exp;
+	//Ctr / Dtr
+	public:
+	Node(int prefex, int exp) :
+ 		m_next(nullptr), 
+		m_prefex(prefex), 
+		m_exp(exp) {}
+	~Node() {
+			while( m_head != nullptr ){
+				Node* tmp = m_head;
+				m_head = m_head->m_next;
+				delete m_head;
+			}
+		}
+	
+	//Geter
+	int getPrefex() { return m_prefex; }
+	int getExp() { return m_exp; }
+	
+};
+private:
+Node* m_head;
+	
+};
+
+int main() {
+	Havasarum* ha = new Havasarum();
+	ha->insert(2, 4);
+	ha->insert(3, 2);
+	ha->display();
+	std::cout << ha->evaluate(3) << std::endl;
 	return 0;
 }
