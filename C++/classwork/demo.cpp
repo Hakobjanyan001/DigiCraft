@@ -129,8 +129,8 @@ class Havasarum{
 			std::cout << curr->m_prefex << "x^" << curr->m_exp;
 			if( curr->m_next != nullptr ) {
 			std::cout << "+";
-		}
-		curr = curr->m_next;
+			}
+			curr = curr->m_next;
 		}
 		std::cout << "" << std::endl;
 	}
@@ -143,11 +143,53 @@ class Havasarum{
 		int sum = 0;
 		Node* curr = m_head;
 		while( curr != nullptr ) {
-			sum += curr->m_prefex + expponent(value, curr->m_exp);
+			sum += curr->m_prefex * expponent(value, curr->m_exp);
 			curr = curr->m_next;
 		}
 		return sum;
+	}
+
+	
+	Havasarum* add(const Havasarum& extFract) {
+		Havasarum* res = new Havasarum();
+		Node* curr1 = m_head;
+		Node* curr2 = extFract.m_head;
+
+		while( curr1 != nullptr || curr2 != nullptr ){
+			int prefex = 0;
+			int exp = 0;
+
+			if(curr1 != nullptr && curr2 != nullptr) {
+				if(curr1->m_exp == curr2->m_exp){
+					prefex = curr1->m_prefex + curr2->m_prefex;
+					exp = curr1->m_exp;
+					curr1 = curr1->m_next;
+					curr2 = curr2->m_next;
+				} else if (curr1->m_exp > curr2->m_exp) {
+					prefex = curr1->m_prefex;
+					exp = curr1->m_exp;
+					curr1 = curr1->m_next;
+				} else {
+					prefex = curr2->m_prefex;
+					exp = curr2->m_exp;
+					curr2 = curr2->m_next;
+				}	
+				if(prefex != 0) {
+	       				res->insert(prefex, exp);	
+				}
+			} else if(curr1 != nullptr) {
+				prefex = curr1->m_prefex;
+				exp = curr1->m_exp;
+				curr1 = curr1->m_next;
+			} else {
+				prefex = curr2->m_prefex;
+				exp = curr2->m_exp;
+				curr2 = curr2->m_next;
+			}
 		}
+	        return res;
+	}
+	
 
 //Helper Functions
 private:
@@ -174,13 +216,7 @@ struct Node {
  		m_next(nullptr), 
 		m_prefex(prefex), 
 		m_exp(exp) {}
-	~Node() {
-			while( m_head != nullptr ){
-				Node* tmp = m_head;
-				m_head = m_head->m_next;
-				delete m_head;
-			}
-		}
+	~Node() {}
 	
 	//Geter
 	int getPrefex() { return m_prefex; }
@@ -197,6 +233,15 @@ int main() {
 	ha->insert(2, 4);
 	ha->insert(3, 2);
 	ha->display();
+
+	Havasarum* ha2 = new Havasarum();
+	ha2->insert(1, 3);
+	ha2->insert(4, 2);
+	ha2->display();
+
+	Havasarum* ha3 = ha->add(*ha2);
+	ha3->display();
+
 	std::cout << ha->evaluate(3) << std::endl;
 	return 0;
 }
