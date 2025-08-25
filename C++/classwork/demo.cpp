@@ -250,3 +250,28 @@ int main() {
 	return 0;
 }
 */
+
+void calculateStats(int arr[]);
+
+int main() {
+	int arr[5] = {7, 5, 6, 9, 4};
+	calculateStats(arr);
+	return 0;
+}
+
+void calculateStats(int arr[]) {
+	int sum = 0;
+	for (int i = 0; i < 5 ; i++) {
+		sum += arr[i];
+	}
+	float mij = sum / 5.0f;
+	std::cout << "mijin =" << mij << std::endl;
+	
+	int max = arr[0];
+	for(int i = 0; i < 5; i++) {
+		if(arr[i] > max) {
+			max = arr[i];
+		}
+	}
+	std::cout << "arr[max] = " << max << std::endl;
+}
