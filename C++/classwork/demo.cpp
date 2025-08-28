@@ -226,7 +226,7 @@ struct Node {
 	int getPrefex() { return m_prefex; }
 	int getExp() { return m_exp; }
 	
-};
+}
 private:
 Node* m_head;
 	
@@ -293,69 +293,94 @@ private:
 // Ctor / Dtor
 public:
 	Matrix(int extSyun, int extTox) : syun(extSyun), tox(extTox){
-		Arr = new int* [tox] ;
-		for(int i = 0; i < syun - 1; i++) { 
+		Arr = new int* [syun] ;
+		for(int i = 0; i < syun; i++) { 
 			Arr[i] = new int [tox];
-			for(int j = 0; j < tox - 1; j++) {
+			for(int j = 0; j < tox; j++) {
 				Arr[i][j] = 0;
 			}	
 		}
 	}
 	~Matrix() {
-	delete [] Arr;
+		/*
+		for(int i = 0; i < syun; i++) { 
+				delete [] Arr[i];
+		}	
+		delete [] Arr;
+		*/
 	}
 
+
 	void setData(int extSyun, int extTox, int value) {
-				if(extSyun > 0 && extTox < tox && extSyun > 0 && extSyun < syun){
-					Arr[extSyun][extTox] = value;
+		if(extSyun > 0 && extSyun < syun && extTox > 0 && extTox < tox){
+			Arr[extSyun][extTox] = value;
 		}
 	}
 
 	int getData(int extSyun, int extTox) {
-		if(extSyun > 0 && extTox < tox && extSyun > 0 && extSyun < syun){
+		if(extSyun > 0 && extSyun < syun && extTox > 0 && extTox < tox){
 			return Arr[extSyun][extTox];
 		}
-		return -1;
+		return 0;
 	}
 
-	Matrix* add(const Matrix& extMX){
+	Matrix add(const Matrix& extMX){
 		if(syun == extMX.syun && tox == extMX.tox){
 			Matrix res(syun, tox);
-			for(int i = 0; i < syun - 1; i++){
+			for(int i = 0; i < syun; i++){
 				for(int j = 0; j < tox; j++){
-					res.Arr[i][j] = Arr[syun][tox] + extMX.Arr[i][j];
+					res.Arr[i][j] = Arr[i][j] + extMX.Arr[i][j];
 				}	
 			}
 			return res;
 		}
-		return -1;
+		return Matrix(0, 0);
 	}
 
 	
-	Matrix multipluy(const Matrix& extMX){
+	Matrix multiply(const Matrix& extMX){
 		if(syun == extMX.syun && tox == extMX.tox){
 			Matrix res(syun, tox);
-			for(int i = 0; i < syun - 1; i++){
+			for(int i = 0; i < syun; i++){
 				for(int j = 0; j < tox; j++){
-					res.Arr[i][j] = Arr[syun][tox] * extMX.Arr[i][j];
+					res.Arr[i][j] = Arr[i][j] * extMX.Arr[i][j];
 				}	
 			}
 			return res;
 		}
-		return -1;
+		return Matrix(0, 0);
 	}
+	
+	
+	
+	void display() {
+		for(int i = 0; i < syun; i++){
+			for(int j = 0; j < tox; j++){
+				std::cout << Arr[i][j] << " ";
+			}
+			std::cout << std::endl;	
+		}
+	}
+
+
 };
 
-//display vor tpi matricai tesqov tox syun
+
 
 int main() {
 	Matrix* mx1 = new Matrix(3, 3);
-	mx1->setData(3, 2, 7);
+	mx1->setData(2, 2, 7);
 	
 	Matrix* mx2 = new Matrix(3, 3);
 	mx2->setData(2, 1, 5);
 
-	Matrix mx3 = new mx1->add(mx2);
-	Matrix mx4 = new mx1->multipluy(mx2);
+	Matrix mx3 = mx1->add(*mx2);
+	Matrix mx4 = mx1->multiply(*mx2);
+	
+	std::cout << "Matrix 1:" << std::endl;
+	mx1->display();
+
+	delete mx1;
+	delete mx2;
 	return 0;
 }
