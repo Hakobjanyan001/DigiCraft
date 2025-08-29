@@ -9,16 +9,16 @@ void swap(int& a, int& b) {
 }
 
 void selectionSort(std::vector<int>& arr) {
-	bool swapped = false;
 	int size = arr.size();
 	for(int i = 0; i < size - 1; i++) {
-	int min = i;
-		for(int j = i + 1; j < size - 1 + 1; j++) {	
+		int min = i;
+		for(int j = i + 1; j < size; j++) {	
 			if(arr[j] < arr[min]) {
-				swap(arr[j], arr[min]);
-				swapped = true;
+				min = j;
 			}
-			if(!swapped) { break; }
+		}
+		if( min != i) {
+			swap(arr[i], arr[min]);
 		}
 	}
 }
