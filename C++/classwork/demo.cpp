@@ -386,84 +386,63 @@ int main() {
 	delete mx2;
 	return 0;
 }
+
+template <typename T> 
+class Var {
+	public:
+	T value;
+	void print() {
+		std::cout << value << std::endl;
+	}
+};
+
+
+template <typename T>
+T add(T a, T b){
+	return a + b;
+}
+
+template <typename T, typename T2>
+T add(T a, T2 b){
+	return a + b;
+}
+
+int main() {
+	Var<int> myVar;
+	// Var* myvar = new Var<int>(); heap->i mej
+	myVar.value = 24;
+	myVar.print();
+	
+	std::cout << add<T>(7, 9)<< std::endl;
+	std::cout << add<T, T2>(8, true)<< std::endl;
+	return 0;
+}
 */
 
 
-
-class MyInt{
-public:
-int value;
-
-	MyInt(int value) : value(value) {}
-	MyInt(const MyInt& other) {
-		this->value = other.value;
-	}
-	~MyInt() {}
-
-	MyInt operator+(const MyInt& other){
-		MyInt ret;
-		ret.value = value + other.value;
-		return ret;	
-	}
-
-
-	MyInt operator-(const MyInt& other){
-		MyInt ret;
-		ret.value = value - other.value;
-		return ret;	
-	}
-
-
-	MyInt operator*(const MyInt& other){
-		MyInt ret;
-		ret.value = value * other.value;
-		return ret;	
-	}
-
-
-	MyInt operator/(const MyInt& other){
-		MyInt ret;
-		ret.value = value / other.value;
-		return ret;	
-	}
-	MyInt operator=(const MyInt& other){
-		this.value = other.value;
-		return this->value;	
+template <typename T>
+class Ban{
+	public:
+	T lvalue;
+	T rvalue;
+	
+	Ban(T a, T b) : lvalue(a), rvalue(b) {}
+	~Ban() {}
+	
+	Ban min(T lvalue, T rvalue){
+		if(lvalue > rvalue){
+			return rvalue;
+		}
+		return lvalue;
 	}
 	
-	bool operator>(const MyInt& other){
-		bool bo = false;
-		if(this->value > other.value) {
-			bo = true;
+
+	Ban max(T lvalue, T rvalue){
+		if(lvalue < rvalue){
+			return rvalue;
 		}
-		return bo;	
+		return lvalue;
 	}
-	
-	bool operator<(const MyInt& other){
-		bool bo = false;
-		if(this->value < other.value) {
-			return bo;
-		}
-		return bo;	
-	}
-	
-	bool operator!=(const MyInt& other){
-		bool bo = false;
-		if(this->value != other.value) {
-			bo = true;
-		}
-		return bo;	
-	}
+
 
 };
-
-int main() {
-	MyInt in1;
-	MyInt in2;
-	in1 = 2;
-	in2 = 3;
-	std::cout << in1 + in2 << std::endl;
-	MyInt in3 = in1 + in2;
-	std::cout << in3 << std::endl;
-	return 0;
-}
