@@ -1,15 +1,17 @@
 #include <iostream>
 #include <string>
 
+
+template <typename T>
 class linkedList {
 // Node Struct
 private:
 struct Node {
 	public:
-		int m_data; 
+		T m_data; 
 		Node* m_next; 
 
-		Node(int value) : m_data(value), m_next(nullptr) {}
+		Node(T value) : m_data(value), m_next(nullptr) {}
 		~Node() {}
 };
 
@@ -28,7 +30,7 @@ public:
 	}
 //Public API
 	public:
-	void push_back(int value) {
+	void push_back(T value) {
 		Node* newNode = new Node(value);
 		if(!m_head) {
 		m_head = newNode;
@@ -60,7 +62,7 @@ public:
 
 	int size() {return m_size;}
 
-	int at(int value) {
+	T at(T value) {
 		Node* curr = m_head;
 			for(int i = 0; i < value; i++) {
 				curr = curr->m_next;
@@ -70,7 +72,7 @@ public:
 };
 
 int main() {
-linkedList* myList = new linkedList();
+linkedList<int>* myList = new linkedList<int>();
 myList->push_back(7);
 myList->push_back(41);
 myList->push_back(23);

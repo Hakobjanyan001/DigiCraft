@@ -1,15 +1,16 @@
 #include <iostream>
 #include <string>
 
-class My_vector{
+template <typename T>
+class Myvector{
 	
 	private:
 	int m_size;
 	int m_capacity;
-	int* m_arr;
+	T* m_arr;
 
 	void resize( int newcap) {
-		int* newarr = new int[newcap];
+		T* newarr = new T[newcap];
 		for(int i = 0; i < m_size; i++) {
 			newarr[i] = m_arr[i];
 		}
@@ -19,10 +20,10 @@ class My_vector{
 	}
 	
 	public:
-	My_vector() : m_size(0), m_capacity(0), m_arr(nullptr) {}
-	~My_vector() {delete[] m_arr;}
+	Myvector() : m_size(0), m_capacity(0), m_arr(nullptr) {}
+	~Myvector() {delete[] m_arr;}
 	
-	void push_back( int a ) {
+	void push_back( T a ) {
 		if(m_size == m_capacity) {
 			resize( m_capacity == 0 ? 1 : m_capacity*2);
 		}	
@@ -41,12 +42,17 @@ class My_vector{
 
 	void clear () {m_size = 0;}
 
-	int at(int a) {return m_arr[a];}
+	T at(int index) {
+		if(index >= 0 && index < m_size) {
+			return m_arr[index];
+		}
+		return -1;
+	}
 };
 
 int main(){
 
-My_vector* vector = new My_vector();
+Myvector<int>* vector = new Myvector<int>();  // < int>, <std::string> (< >)-> i mej nshel tayp
 
 for(int i = 0; i < 5; i++ ){
 	vector->push_back(i * 2);
