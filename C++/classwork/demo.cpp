@@ -417,7 +417,7 @@ int main() {
 	std::cout << add<T, T2>(8, true)<< std::endl;
 	return 0;
 }
-*/
+
 
 
 template <typename T>
@@ -446,3 +446,59 @@ class Ban{
 
 
 };
+
+*/
+
+
+// Exception _____________________________________________________________
+
+#include <exception>
+/*
+int main() {
+	int a = 1;
+	int b = 0;
+	try{
+		if( b == 0) {
+			throw "Division by 0 Exception";
+		}
+		std::cout << a / b << std::endl;
+	} catch ( const char* msg) {
+		std::cout << "Error: " << msg << std::endl;
+	}
+	return 0;
+}
+*/
+
+//void safe() noexcept {
+ // asuma vor chi kara exception unena ira mej 
+//}
+
+
+//int main() {
+//		safe();
+//	return 0;
+//}
+
+void c();
+int devaid(int& a, int& b);
+
+int main() {
+	c();
+	return 0;
+}
+void c() {
+	int a = 10;
+	int b = 0;
+	try{
+	devaid(a, b);
+	} catch(const char* msg ) {
+		std::cout << "Error: " << msg << std::endl;
+	}
+}
+
+int devaid(int& a, int& b) {
+	if (b == 0 ) {
+		throw "Dvision by 0 Exception";
+	}
+	return a / b;
+}
