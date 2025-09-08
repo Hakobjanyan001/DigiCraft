@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <exception>
 
 /*
 class Kotorak {
@@ -452,7 +453,6 @@ class Ban{
 
 // Exception _____________________________________________________________
 
-#include <exception>
 /*
 int main() {
 	int a = 1;
@@ -467,17 +467,17 @@ int main() {
 	}
 	return 0;
 }
-*/
-
-//void safe() noexcept {
- // asuma vor chi kara exception unena ira mej 
-//}
 
 
-//int main() {
-//		safe();
-//	return 0;
-//}
+void safe() noexcept {
+  asuma vor chi kara exception unena ira mej 
+}
+
+
+int main() {
+		safe();
+	return 0;
+}
 
 void c();
 int devaid(int& a, int& b);
@@ -502,3 +502,30 @@ int devaid(int& a, int& b) {
 	}
 	return a / b;
 }
+
+
+class MyException : public std::exception {
+public:
+	const cahr* what() const noexcept override{
+		return "my exception";
+	}
+};
+
+void f(){
+	throw new MyException();
+}
+
+int main() {
+	try{
+		f();		
+	} catch ( const MyException* e) {
+		std::cout << "Error: " << e->what() << std::endl;
+	}
+	return 0;
+}
+*/
+
+
+
+
+
