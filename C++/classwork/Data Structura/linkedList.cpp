@@ -3,7 +3,7 @@
 
 
 template <typename T>
-class linkedList {
+class linkedList : public std::exception {
 // Node Struct
 private:
 struct Node {
@@ -63,12 +63,21 @@ public:
 	int size() {return m_size;}
 
 	T at(T value) {
+		try {
+		if (value >= 0 && value < m_size) {
 		Node* curr = m_head;
 			for(int i = 0; i < value; i++) {
 				curr = curr->m_next;
 			}
 			return curr->m_data;
+		}
+		throw new linkedList();
+		} catch(const std::exception* e) {
+			std::cout << "Error: " << e->what() << std::endl;
+			return -1;
+		}
 	}
+
 };
 
 int main() {

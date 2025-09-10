@@ -2,7 +2,7 @@
 #include <string>
 
 template <typename T>
-class Myvector{
+class Myvector : public std::exception {
 	
 	private:
 	int m_size;
@@ -43,10 +43,16 @@ class Myvector{
 	void clear () {m_size = 0;}
 
 	T at(int index) {
+		try{
 		if(index >= 0 && index < m_size) {
 			return m_arr[index];
 		}
-		return -1;
+		throw new Myvector();
+			
+		} catch (const std::exception* e) {
+			std::cout << "Error: " << e->what() << std::endl;
+			return -1;
+		}
 	}
 };
 
@@ -56,10 +62,11 @@ Myvector<int>* vector = new Myvector<int>();  // < int>, <std::string> (< >)-> i
 
 for(int i = 0; i < 5; i++ ){
 	vector->push_back(i * 2);
-	std::cout << i << "-erord andamy: " << vector->at(i) << std::endl;
+	//std::cout << i << "-erord andamy: " << vector->at(i) << std::endl;
 }
 
 std::cout << "\nzangvaci chapy: " << vector->size() << "\n" << std::endl;
+	std::cout << vector->at(8) << std::endl;
 
 vector->pop_back();
 
