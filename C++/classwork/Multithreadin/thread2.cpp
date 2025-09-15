@@ -72,7 +72,7 @@ void Print(char ch) {
   for(int i = 0; i < 5; i++) {
   	for(int j = 0; j < 10; j++) {
 		std::cout << ch;
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+		std::this_thread::sleep_for(std::chrono::milliseconds(20)); // std::chrono::seconds(2) varkyanov
 	}
 	std::cout << std::endl; 
   }
