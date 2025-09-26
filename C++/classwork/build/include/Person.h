@@ -18,5 +18,5 @@ public:
 	void printInfo();
 }; 
 
-#warning "Include meny ../Person.h"
+//#warning "Include meny ../Person.h"
 #endif // _PERSON_H
