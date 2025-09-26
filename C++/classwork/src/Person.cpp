@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../hider/Person.h"
+#include "../include/Person.h"
 
 	Person::Person(int age, std::string name) : m_age(age), m_name(name) {}
 	
