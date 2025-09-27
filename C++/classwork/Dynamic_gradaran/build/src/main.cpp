@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/add.h"
+#include "../include/math.h"
 #include "../include/Person.h"
 
 int main() {
