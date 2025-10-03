@@ -73,5 +73,6 @@ std::cout << myList->size() << std::endl;
 myList->dequeue();
 std::cout << myList->get() << std::endl;
 std::cout << myList->size() << std::endl;
-	return 0;
+delete myList;	
+return 0;
 }
