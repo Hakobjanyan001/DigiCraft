@@ -1,8 +1,12 @@
 #include "tiv.h"
 
 int f(int& a) {
-	if(a % 2 == 0){
-		return 1;
+	int arr[a] = {1, 5 ,7, 6, 9 };
+	int max_arr = arr[0];
+	for(int i = 0; i < a; i++) {
+		if(max_arr < arr[i ]) {
+			max_arr = arr[i];
+		}
 	}
-	return 0;
+	return max_arr;
 }

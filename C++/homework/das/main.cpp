@@ -2,7 +2,7 @@
 #include "tiv.h"
 
 int main() {
-	int a = 6;
+	int a = 5;
 	std::cout << f(a) << std::endl;
 return 0;
 }
