@@ -1,12 +1,16 @@
 #include <iostream>
-#include "../include/math.h"
-#include "../include/Person.h"
-
+#include <sqlite3.h>
+#include <../include/sqlutilits.h>
 int main() {
-	std::cout << add(7,8) << std::endl;
-	std::cout << sub(7,8) << std::endl;
+	sqlite3* db = nullptr;
+	
+	const std::string file = "my.db";
+	const std::string name = "Karen";
 
-	//Person ps(24,"Karen");
-	//ps.printInfo();
+	create(file, db);
+	createTable(db);
+	insert(name, 21);
+	selectTable(db);
+	close(db);
 	return 0;
 }
