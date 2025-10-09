@@ -1,16 +1,23 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <../include/sqlutils.h>
-int main() {
-	sqlite3* db = nullptr;
-	
-	const std::string file = "my.db";
-	const std::string name = "Karen";
+#include <vector>
 
-	create(file, db);
-	createTable(db);
-	insert(db, name, 21);
-	selectTable(db);
-	close(db);
+int main() {
+	std::vector<std::string> name = {"Karen", "Poxos", "Petros"};
+	std::vector<int> age = {24, 27, 17};
+	const std::string file = "my.db";
+	
+	sqliteUtilis sql;
+	
+	sql.create(file);
+	sql.createTable();
+	
+	for(int i = 0; i < name.size() - 1; i++ ) {
+		sql.insert(name[i], age[i]);
+	}
+	
+	sql.selectTable();
+	sql.close();
 	return 0;
 }

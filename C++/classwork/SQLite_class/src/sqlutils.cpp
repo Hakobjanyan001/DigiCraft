@@ -2,7 +2,7 @@
 #include <sqlite3.h>
 #include <../include/sqlutils.h>
 
-static int callback(void* /*unused*/, int argc, char** argv, char** azColName) {
+static int sqliteUtilis::callback(void* /*unused*/, int argc, char** argv, char** azColName) {
 	for(int i = 0; i < argc; i++) {
 		std::cout << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL" ) << " | ";
 	}
@@ -10,53 +10,48 @@ static int callback(void* /*unused*/, int argc, char** argv, char** azColName) {
 	return 0;
 }
 
-bool create(const std::string& filename, sqlite3*& db) {
-	int rc = sqlite3_open(filename.c_str(), &db);
+bool sqliteUtilis::chekError(char*& errmsg, int& rc, const char* command) {
+	rc = sqlite3_exec(this->db.get(), command, callback, nullptr, &errmsg);
+	if(rc != SQLITE_OK) {
+		std::cerr << "SQL error: " << errmsg << "\n";
+		sqlite3_free(errmsg);
+		return false;
+	}
+	return true;
+}
+
+sqliteUtilis::sqliteUtilis() : db(nullptr, sqlite3_close) {}
+
+sqliteUtilis::~sqliteUtilis() {}
+
+bool sqliteUtilis::create(const std::string& filename) {
+	sqlite3* sql_db = nullptr;
+	rc = sqlite3_open(filename.c_str(), &sql_db);
 		if(rc != SQLITE_OK) {
-		std::cerr << "Can't open DB" << sqlite3_errmsg(db) << "\n";
-		sqlite3_close(db);
+		std::cerr << "Can't open DB" << sqlite3_errmsg(sql_db) << "\n";
+		sqlite3_close(sql_db);
 		return false;
 	}
+	this->db = std::unique_ptr<sqlite3, decltype(&sqlite3_close)>(sql_db, sqlite3_close);
 	return true;
-}
+}	
 
-bool createTable(sqlite3* db) {
+bool sqliteUtilis::createTable() {
 	const char* command = "CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY, name TEXT, age INTEGER);";
-	char* errmsg = nullptr;
-	int rc = sqlite3_exec(db, command, callback, nullptr, &errmsg);
-	if(rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errmsg << "\n";
-		sqlite3_free(errmsg);
-		return false;
-	}
-	return true;
+	return (chekError(errmsg, rc, command));
 }
 
-bool insert(sqlite3* db, const std::string& name, const int& age) {
-	const std::string innerAge = std::to_string(age);
-	const std::string command = "INSERT INTO person (name, age) VALUES ('"+ name +"', "+ innerAge + ");";
-	char* errmsg = nullptr;
-	int rc = sqlite3_exec(db, command.c_str(), callback, nullptr, &errmsg);
-	if(rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errmsg << "\n";
-		sqlite3_free(errmsg);
-		return false;
-	}
-	return true;
+bool sqliteUtilis::insert(const std::string& name, const int& age) {
+	std::string innerAge = std::to_string(age);
+	std::string command = "INSERT INTO person (name, age) VALUES ('"+ name +"', "+ innerAge + ");";
+	return (chekError(errmsg, rc, command.c_str()));
 }
 
-bool selectTable(sqlite3* db) {
+bool sqliteUtilis::selectTable() {
 	const char* command = "SELECT id, name, age FROM person;";
-	char* errmsg = nullptr;
-	int rc = sqlite3_exec(db, command, callback, nullptr, &errmsg);
-	if(rc != SQLITE_OK) {
-		std::cerr << "SQL error: " << errmsg << "\n";
-		sqlite3_free(errmsg);
-		return false;
-	}
-	return true;
+	return (chekError(errmsg, rc, command));
 }
 
-void close(sqlite3*& db) {
-	sqlite3_close(db);
+void sqliteUtilis::close() {
+	this->db.reset(); //  unique_ptr kpakvi inqnuruyn
 }
