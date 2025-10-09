@@ -13,7 +13,7 @@ int main() {
 	sql.create(file);
 	sql.createTable();
 	
-	for(int i = 0; i < name.size() - 1; i++ ) {
+	for(int i = 0; i < name.size(); i++ ) {
 		sql.insert(name[i], age[i]);
 	}
 	

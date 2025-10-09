@@ -2,7 +2,7 @@
 #include <sqlite3.h>
 #include <../include/sqlutils.h>
 
-static int sqliteUtilis::callback(void* /*unused*/, int argc, char** argv, char** azColName) {
+int sqliteUtilis::callback(void* /*unused*/, int argc, char** argv, char** azColName) {
 	for(int i = 0; i < argc; i++) {
 		std::cout << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL" ) << " | ";
 	}
