@@ -42,7 +42,7 @@ bool sqliteUtilis::createTable() {
 	return (chekError(errmsg, rc, command));
 }
 
-bool sqliteUtilis::insert(const std::string& task, const std::string& during, const std::string& finished) {
+bool sqliteUtilis::insert(const std::string& note, const std::string& during, const std::string& finished) {
 	std::string command = "INSERT INTO tasks (note, during, finished) VALUES ('"+ note +"', '"+ during +"', '"+ finished + "');";
 	return (chekError(errmsg, rc, command.c_str()));
 }
@@ -58,8 +58,8 @@ void sqliteUtilis::close() {
 
 
 // TO_DO_LIST_CLASS
-ToDoList::ToDoList() : sqlite_db {
-	sqlite_db.create("my.db")
+ToDoList::ToDoList() : sqlite_db() {
+	sqlite_db.create("my.db");
 	sqlite_db.createTable();
 }
 
@@ -70,11 +70,11 @@ void ToDoList::addTask(const std::string& newTask) {
 	sqlite_db.insert(newTask, "", "");
 }
 
-void ToDoList::printAlTasks () {
+void ToDoList::printAllTask () {
 sqlite_db.selectTable();
 }
 
 
-void removeTask(int id) {
+void ToDoList::removeTask(int id) {
  const char* sql = "DELETE FROM tasks WHERE id = ?;";
 }

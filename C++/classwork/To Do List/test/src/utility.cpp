@@ -12,29 +12,29 @@ void menyu() {
                  	     "[4] Remove all notes: "
                     	     "[5] Exit: ";
 		std::cin >> choice;
+				int id = 0;
+				std::string task;
         
-		switch (answer) {
+		switch (choice) {
 		   	case 1:
 				std::cout << "Write your task" << std::endl;
-				std::string task;
 				std::getline(std::cin, task);
 				if(task.empty()) {
 					std::cout << "Task cannot be empty \n" << std::endl;
 					continue;
 				}
-				note.addNote(task);
+				note.addTask(task);
 					break;
 			case 2:
-				note.printAllNotes();
+				note.printAllTask();
 					break;
 			case 3:
 				std::cout << "????" << std::endl;
 				break;
 			case 4:
 				std::cout << "Write ID for remove task" << std::endl;
-				int id = 0;
 				std::cin >> id;
-				note.removeNote(id);
+				note.removeTask(id);
 					break;
        	       		case 5:
 				std::cout << "Exiting program" << std::endl;

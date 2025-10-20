@@ -17,7 +17,7 @@ public:
 
 	bool create(const std::string& filename); 
 	bool createTable();
-	bool insert(const std::string& task, const std::string& during, const std::string& finished);
+	bool insert(const std::string& note, const std::string& during, const std::string& finished);
 	bool selectTable();
 	void close();
 };
@@ -35,7 +35,7 @@ public:
 	
 	void addTask(const std::string& newTask);
 	void printAllTask();
-	void removeNote(int id);
+	void removeTask(int id);
 
 };
 
