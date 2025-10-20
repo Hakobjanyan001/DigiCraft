@@ -1,5 +1,7 @@
 #include <iostream>
-#include <sqlite3>
+#include <../include/utility.h>
 
-sqlite3* db;
-db.include
+int main() {
+	 menyu();
+	return 0;
+}

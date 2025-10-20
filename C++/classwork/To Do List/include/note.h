@@ -15,29 +15,27 @@ public:
 	sqliteUtilis();
 	~sqliteUtilis();
 
-	bool create(const std::string "my.db"); 
+	bool create(const std::string& filename); 
 	bool createTable();
-	bool insert(const std::string neote, const std::string& during, const std::string& finished);
+	bool insert(const std::string& task, const std::string& during, const std::string& finished);
 	bool selectTable();
 	void close();
 };
 
-class ToDoList : friend sqliteUtilis {
+class ToDoList {
 
 private:
 	// Member Data
-	std::vector<note> m_note;;
-	std::vector<during> m_during;
-	std::vector<finished> m_finished;
+	sqliteUtilis sqlite_db;
 
 public:
 	// STR/GTR
-	ToDoList(const std::string& newNote = "", const std::string& newDuring = "", const std::string& newFinished = "");
+	ToDoList();
 	~ToDoList();
 	
-	void addNote(const std::string& newNote);
+	void addNote(const std::string& newTask);
 	void printAllNotes ();
-	void removeNote();
+	void removeNote(int& id);
 
 };
 

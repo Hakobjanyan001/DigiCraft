@@ -38,44 +38,43 @@ bool sqliteUtilis::create(const std::string& filename) {
 }	
 
 bool sqliteUtilis::createTable() {
-	const char* command = "CREATE TABLE IF NOT EXISTS person (id INTEGER PRIMARY KEY, note TEXT, during TEXT, finished TEXT);";
+	const char* command = "CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, note TEXT, during TEXT, finished TEXT);";
 	return (chekError(errmsg, rc, command));
 }
 
-bool sqliteUtilis::insert(const std::string& name, const std::string& during, const& std::string& finished) {
-	std::string command = "INSERT INTO person (note, during, finished) VALUES ('"+ note +"', "+ during +", "+ finished +");";
+bool sqliteUtilis::insert(const std::string& task, const std::string& during, const std::string& finished) {
+	std::string command = "INSERT INTO tasks (note, during, finished) VALUES (?, ?, ?);";
 	return (chekError(errmsg, rc, command.c_str()));
 }
 
 bool sqliteUtilis::selectTable() {
-	const char* command = "SELECT id, note, during, finished FROM person;";
+	const char* command = "SELECT id, task, during, finished FROM tasks;";
 	return (chekError(errmsg, rc, command));
 }
 
 void sqliteUtilis::close() {
 	this->db.reset(); //  unique_ptr kpakvi inqnuruyn
-}
+} 
 
 
 // TO_DO_LIST_CLASS
-ToDoList::ToDoList (const std::string& newNote = "", const std::string& newDuring = "", const std::string& newFinished = "") :
-       	m_note(newNote),
-	m_during(newDuring),
-	m_finished(newFinished) {}
+ToDoList::ToDoList () : sqlite_db {
+	sqlite_db.create("my.db")
+	sqlite_db.createTable();
+}
 
-ToDoList::~ToDoList() {}	
+ToDoList::~ToDoList() {
+}	
 
-void ToDoList::addNote(const std::string& newNote) {
-	db.insert(const std::string& note);
-	}
+void ToDoList::addTask(const std::string& newTask) {
+	sqlite_db.insert(newTask, "", "");
+}
 
-void ToDoList::printAllNotes () {
-selectTable();
+void ToDoList::printAlTasks () {
+sqlite_db.selectTable();
 }
 
 
-void removeNote() {
-	m_note.size() = 0; 
-	m_during.size() = 0;
-	m_finished.size() = 0;
+void removeTask(int& id) {
+ const char* sql = "DELETE FROM tasks WHERE id = ?;";
 }
