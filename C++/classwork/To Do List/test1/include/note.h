@@ -9,7 +9,7 @@ private:
 	std::unique_ptr<sqlite3, decltype(&sqlite3_close)> db;
 	char* errmsg = nullptr;
 	int rc = 0;
-	bool chekError(char*& errmsg, int& rc, const char* command);
+	bool checkError(char*& errmsg, int& rc, const char* command);
 	static int callback(void* /*unused*/, int argc, char** argv, char** azColName);
 public:
 	sqliteUtilis();
@@ -17,7 +17,9 @@ public:
 
 	bool create(const std::string& filename); 
 	bool createTable();
+	bool selectIdNote(int id);
 	bool insert(const std::string& note, const std::string& during, const std::string& finished);
+	bool removeIdTask(int id);
 	bool selectTable();
 	void close();
 };
@@ -35,6 +37,7 @@ public:
 	
 	void addTask(const std::string& newTask);
 	void printAllTask();
+	void printIdTask(int id);
 	void removeTask(int id);
 
 };

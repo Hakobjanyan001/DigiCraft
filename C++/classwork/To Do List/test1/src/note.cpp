@@ -11,7 +11,7 @@ int sqliteUtilis::callback(void* /*unused*/, int argc, char** argv, char** azCol
 	return 0;
 }
 
-bool sqliteUtilis::chekError(char*& errmsg, int& rc, const char* command) {
+bool sqliteUtilis::checkError(char*& errmsg, int& rc, const char* command) {
 	rc = sqlite3_exec(this->db.get(), command, callback, nullptr, &errmsg);
 	if(rc != SQLITE_OK) {
 		std::cerr << "SQL error: " << errmsg << "\n";
@@ -39,23 +39,45 @@ bool sqliteUtilis::create(const std::string& filename) {
 
 bool sqliteUtilis::createTable() {
 	const char* command = "CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, note TEXT, during TEXT, finished TEXT);";
-	return (chekError(errmsg, rc, command));
+	return (checkError(errmsg, rc, command));
+}
+
+bool sqliteUtilis::selectIdNote(int id) {
+	std::string command = "SELECT id, note, during, finished FROM tasks WHERE id = " + std::to_string(id) + ";";
+
+	rc = sqlite3_exec(this->db.get(),command.c_str(), callback, nullptr, &errmsg);
+	if(rc != SQLITE_OK) {
+		std::cerr << "SQL error: " << errmsg << "\n";
+		sqlite3_free(errmsg);
+		return false;
+	}
+	return true;
 }
 
 bool sqliteUtilis::insert(const std::string& note, const std::string& during, const std::string& finished) {
 	std::string command = "INSERT INTO tasks (note, during, finished) VALUES ('"+ note +"', '"+ during +"', '"+ finished + "');";
-	return (chekError(errmsg, rc, command.c_str()));
+	return (checkError(errmsg, rc, command.c_str()));
 }
 
 bool sqliteUtilis::selectTable() {
 	const char* command = "SELECT id, note, during, finished FROM tasks;";
-	return (chekError(errmsg, rc, command));
+	return (checkError(errmsg, rc, command));
 }
 
 void sqliteUtilis::close() {
 	this->db.reset(); //  unique_ptr kpakvi inqnuruyn
 } 
 
+bool sqliteUtilis::removeIdTask(int id) {
+	std::string command = "DELETE FROM tasks WHERE id = " + std::to_string(id) +";";
+	rc = sqlite3_exec(this->db.get(), command.c_str(), callback, nullptr, &errmsg);
+	if(rc != SQLITE_OK) {
+		std::cerr << "SQL error: " << errmsg << "\n";
+		sqlite3_free(errmsg);
+		return false;
+	}
+	return true;
+}
 
 // TO_DO_LIST_CLASS
 ToDoList::ToDoList() : sqlite_db() {
@@ -71,10 +93,13 @@ void ToDoList::addTask(const std::string& newTask) {
 }
 
 void ToDoList::printAllTask () {
-sqlite_db.selectTable();
+	sqlite_db.selectTable();
 }
 
+void ToDoList::printIdTask(int id){
+	sqlite_db.selectIdNote(id);
+}
 
 void ToDoList::removeTask(int id) {
- const char* sql = "DELETE FROM tasks WHERE id = ?;";
+	sqlite_db.removeIdTask(id);	
 }

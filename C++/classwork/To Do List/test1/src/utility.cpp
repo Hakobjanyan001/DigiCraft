@@ -6,15 +6,21 @@ void menyu() {
 	ToDoList note;
 	while(true) {
 		int choice;
-		std::cout << "[1] Add task: "
-                	     "[2] Show all notes: "
-                    	     "[3] Find note: "
-                 	     "[4] Remove all notes: "
-                    	     "[5] Exit: ";
-		std::cin >> choice;
-				int id = 0;
-				std::string task;
-        
+		std::cout << "[1] Add task: \n"
+                	     "[2] Show all notes: \n"
+                    	     "[3] Find note: \n"
+                 	     "[4] Remove notes: \n"
+                    	     "[5] Exit: \n";
+
+		if(!(std::cin >> choice)){
+			std::cout << "Unknown input" << std::endl;
+			std::cin.clear();
+			continue;
+		}
+		
+		int id = 0;
+		std::string task;
+        	std::cin.ignore();
 		switch (choice) {
 		   	case 1:
 				std::cout << "Write your task" << std::endl;
@@ -29,7 +35,10 @@ void menyu() {
 				note.printAllTask();
 					break;
 			case 3:
-				std::cout << "????" << std::endl;
+				std::cout << "Write ID for find task" << std::endl;
+				std::cin >> id;
+				note.printIdTask(id);
+				std::cin.ignore();
 				break;
 			case 4:
 				std::cout << "Write ID for remove task" << std::endl;
