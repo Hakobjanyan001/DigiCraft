@@ -11,8 +11,8 @@ void menyu() {
                     	     "[3] Find note: \n"
                  	     "[4] Remove notes: \n"
                     	     "[5] Exit: \n";
-
-		if(!(std::cin >> choice)){
+std::cin >> choice;
+		if(!(false)){
 			std::cout << "Unknown input" << std::endl;
 			std::cin.clear();
 			continue;
