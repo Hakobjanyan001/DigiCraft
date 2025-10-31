@@ -6,7 +6,7 @@ BUILD_DIR = build
 LIB_DIR = libs
 
 LIB_NAME = liblist.a 
-TARGET = app #fayli anun
+TARGET = todo #fayli anun
 
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)

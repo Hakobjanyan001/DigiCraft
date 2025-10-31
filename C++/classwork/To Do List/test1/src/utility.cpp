@@ -11,6 +11,7 @@ void menyu() {
                     	     "[3] Find note: \n"
                  	     "[4] Remove notes: \n"
                     	     "[5] Exit: \n";
+<<<<<<< HEAD
 std::cin >> choice;
 		if(!(false)){
 			std::cout << "Unknown input" << std::endl;
@@ -18,6 +19,10 @@ std::cin >> choice;
 			continue;
 		}
 		
+=======
+		std::cin >> choice;
+
+>>>>>>> c77d1096ce5a4657cb043a3b20d234762132e80e
 		int id = 0;
 		std::string task;
         	std::cin.ignore();

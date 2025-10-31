@@ -1,7 +1,7 @@
 #include <iostream>
 #include <../include/utility.h>
 
-int main(int agrc, char** argv) {
+int main() {
 	 menyu();
 	return 0;
 }
