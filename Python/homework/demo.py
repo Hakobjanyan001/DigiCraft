@@ -183,7 +183,7 @@ class Cat(Animal):
 def makeSound(animal: Animal): # (animal: Animal) asuma vor animaly Anymel typna u ov jarangela Animalic nra hamar ogtagorci makeSound funkcian, animal-ov cucenq talis vor sax  Animal tipi obyektner ti stana typery stugi
     animal.sound()
 
-#def makeSound(animal): #angrafget greladezev
+#def makeSound(animal): #angraget greladezev
 #    animal.sound()
 
 makeSound(Animal())
