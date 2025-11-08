@@ -31,6 +31,6 @@ class Cat(Animal):
 
 def makesound(animal: Animal):
     animal.sound()
-    makesound(Animal())
+    makesound(animal)
     makesound(Dog())
     makesound(Cat())
