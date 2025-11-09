@@ -242,17 +242,3 @@
 #echo "$num : Number is prime "
 #}
 #prime $number
-
-
-
-
-
-
-
-
-
-
-
-
-
-
