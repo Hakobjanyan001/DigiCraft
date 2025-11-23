@@ -1,19 +1,16 @@
 #include <../include/ChatServer.h>
 #include <iostream>
-#include <ctring>
+#include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <sys\socket.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
-#include <a;gorithm>
+#include <algorithm>
 
 ChatServer::ChatServer(int p) : 
-	server_socket(-1), 
-	port(p), 
-	running(false), 
-	db("chat.db") {
+	server_socket(-1), port(p), running(false), db() {
 		if(!db.open()) {
-				stc::cerr << "[Server] can not open DB" << std::endl;
+				std::cerr << "[Server] can not open DB" << std::endl;
 		}
 }
 
@@ -32,17 +29,23 @@ bool ChatServer::start() {
 	
 	// settings
 	int opt = 1;
-	setsockopt(server_socket, SQL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+	setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
 	// to tie in port 
-	sockaddr_in addr;
+	sockaddr_in addr{};
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_port = htons(port); // port -> nework byte order
 	
+	if(bind(server_socket, (sockaddr*)&addr, sizeof(addr)) < 0) {
+		std::cerr << "bind" << ")\n";
+		close(server_socket);
+		return false;
+	}
+
 	// listen
-	if(listen(server_socket, 10) < 10) {
-		std::cerr << "[Server] bind is falied (port "<< port << ")\n";
+	if(listen(server_socket, 10) < 0) {
+		std::cerr << "[Server] listen is falied (port "<< port << ")\n";
 		close(server_socket);
 		return false;	
 	}
@@ -60,7 +63,7 @@ bool ChatServer::start() {
 
 void ChatServer::acceptClients() {
 	while(running) {
-		sockaddr_in client_addr;
+		sockaddr_in client_addr{};
 		socklen_t len = sizeof(client_addr);
 		int client_sock = accept(server_socket, (sockaddr*)&client_addr, &len);
 
@@ -75,6 +78,7 @@ void ChatServer::acceptClients() {
 		// creat Client
 		Client* client = new Client(client_sock);
 		client->user = User();
+		client->authenticated = false;
 		
 		{
 			std::lock_guard<std::mutex> lock(clients_mutex);
@@ -82,17 +86,17 @@ void ChatServer::acceptClients() {
 		}
 
 		std::cout << "[Server] new client` " << client_sock << "\n";
-	}
 
-	// run handle thread
-	client->thread = std::thread(&ChatServer::handleClient, this, client);
+		// run handle thread
+		client->thread = std::thread(&ChatServer::handleClient, this, client);
+	}
 }
 
 void ChatServer::handleClient(Client* client) {
-	char buffer[1024]
+	char buffer[1024];
 	std::string line;
 
-	std::string welcome = "Hello! write your name:\n"
+	std::string welcome = "Hello! write your message:\n";
 	send(client->socket, welcome.c_str(), welcome.size(), 0);
 
 	while(running && client->socket != -1) {
@@ -103,7 +107,7 @@ void ChatServer::handleClient(Client* client) {
 		int bytes = read(client->socket, buffer, sizeof(buffer) - 1);
 		if(bytes <= 0) {
 			if(bytes == 0) break;
-			if(errno == EINTR || errno == EAGIN) continue;
+			if(errno == EINTR || errno == EAGAIN) continue;
 			break;
 		}
 
@@ -114,40 +118,40 @@ void ChatServer::handleClient(Client* client) {
 		size_t pos;
 			while((pos = line.find('\n')) != std::string::npos) {
 				std::string msg = line.substr(0, pos);
-				line,erase(0, pos + 1);
+				line.erase(0, pos + 1);
 				
 				//if client don't write name -> ask for write  name
 				if(!client->authenticated) {
 					std::string name = msg;
 				
 					//clean spaces
-					name.erase(std::remove(name.begin(), name.end(), '\r'), name.end())
-					name.erase(std::remove(name.begin(), name.end(), '\n'), name.end())
-					while(!name.empty() && std::isspace(static_cast<usnsiged char> (name.back()))) {
+					name.erase(std::remove(name.begin(), name.end(), '\r'), name.end());
+					name.erase(std::remove(name.begin(), name.end(), '\n'), name.end());
+					while(!name.empty() && std::isspace(static_cast<unsigned char> (name.back()))) {
 						name.pop_back();
 					}
 
-					while(!name.empty() && std::isspace(static_cast<usnsiged char> (name.front()))) {
+					while(!name.empty() && std::isspace(static_cast<unsigned char> (name.front()))) {
 						name.erase(0, 1);
 					}
 
 					// cheak unnown simvols
-					if(name.find(':') != std::string::nops || name.find('\n') != std::string::nops) {
-						send(client->socket, "name cannot contain ':' or '\n'", 50, 0)
+					if(name.find(':') != std::string::npos || name.find('\n') != std::string::npos) {
+						send(client->socket, "name cannot contain ':' or '\n'", 50, 0);
 								continue;
 					}
 
 					// chek length
 					if(name.empty() || name.size() > 50) {
-						send(client->socket, "Name must be 1-50 characters\n, 40, 0")
+						send(client->socket, "Name must be 1-50 characters\n", 40, 0);
 						continue;
 					}
 					
 					// find or creat user
 					User u = db.getUser(name);
-					if(u.id == -1) {
+					if(u.getId() == -1) {
 							int new_id = db.addUser(name);
-							u = User(new_id, name)
+							u = User(new_id, name);
 					}
 
 					client->user = u;
@@ -159,10 +163,10 @@ void ChatServer::handleClient(Client* client) {
 					// sent last 10 messages
 					auto last_msgs = db.getLastMessages(10);
 					for(const auto& m : last_msgs) {
-						std::string hist = "[" + m.username + "]: " + m.content + "\n";
+						std::string hist = "[" + m.username + "]: " + m.connected + "\n";
 						send(client->socket, hist.c_str(), hist.size(), 0);
 					}
-				} else if(msg.starts_with("MSG:")) {  //already logged in -> procces MSGelse if 
+				} else if(msg.compare(0, 4, "MSG:")) {  //already logged in -> procces MSG
 					std::string text = msg.substr(4);
 					
 					// remove first spaces
@@ -170,11 +174,11 @@ void ChatServer::handleClient(Client* client) {
 					if(text.empty()) continue;
 
 					// save on Db
-					db.addMessage(client->user.id, text);
+					db.addMessage(client->user.getId(), text);
 
 					// sent broadcast
-					std::string formatted = "[" + client->user.username + "]: " + text;
-					broadcast(formatted, client);
+					std::string formatted = "[" + client->user.getUsername() + "]: " + text;
+					broadcast(formatted, client->socket);
 				} else { // Unnown command
 					send(client->socket, "write MSG:text\n", 30, 0);
 				}
@@ -183,11 +187,11 @@ void ChatServer::handleClient(Client* client) {
 	removeClient(client);
 }
 
-void ChatServer::broadcast(const std::string& message, client* exclude) {
-	std::string full_msg = message + "\n"
-	std::lock_guard<std::mutex> lock(client_mutex);
+void ChatServer::broadcast(const std::string& message, int  exclude_fd = -1) {
+	std::string full_msg = message + "\n";
+	std::lock_guard<std::mutex> lock(clients_mutex);
 	for(Client* c : clients ) {
-		if(c == exclude || !c->authenticated || c->socket == -1) continue;
+		if(c->socket == exclude_fd || c->socket == -1 || !c->authenticated) continue;
 		send(c->socket, full_msg.c_str(), full_msg.size(), 0);
 	}	
 }
@@ -195,7 +199,7 @@ void ChatServer::broadcast(const std::string& message, client* exclude) {
 void ChatServer::removeClient(Client* client) {
 	{
 		std::lock_guard<std::mutex> lock(clients_mutex);
-		clients.erase(std::remove(clients.begin(), clients.end(), client(), clients.end()));
+		clients.erase(std::remove(clients.begin(), clients.end(), client), clients.end());
 	}
 	std::cout << "[Server] Client disconnected` " << client->socket << "\n";
 	delete client;

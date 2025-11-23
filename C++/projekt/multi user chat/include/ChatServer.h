@@ -3,9 +3,10 @@
 
 #include<Database.h>
 #include<User.h>
+#include<unistd.h>
 #include<vector>
 #include<string>
-#include<sys/socet.h>
+#include<sys/socket.h>
 #include<netinet/in.h>
 #include<thread>
 #include<mutex>
@@ -21,8 +22,8 @@ struct Client {
 		if(thread.joinable()) {
 			thread.join();
 		}
-		if(socet != -1) {
-			close(socet);
+		if(socket != -1) {
+			close(socket);
 			socket = -1;
 		}
 	}
@@ -39,16 +40,16 @@ private:
 
 	void acceptClients();
 	void handleClient(Client* client);
-	void broadcat(const std::string& message, Client* exclude = nullptr);
 	void removeClient(Client* client);
 	void cleanup();
 
-piblic:
+public:
 	ChatServer(int p = 8080);
 	~ChatServer();
 
 	bool start();
 	void stop();
+	void broadcast(const std::string& message, int exclude_fd);
 };
 
 #endif // CHATSERVER_H

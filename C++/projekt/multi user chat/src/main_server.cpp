@@ -1,4 +1,4 @@
-#include <./include/ChatServer.h>
+#include <../include/ChatServer.h>
 #include <iostream>
 #include <csignal>
 
@@ -10,7 +10,7 @@ void signalHandler(int signum) {
 				server->stop();
 				delete server;
 		}
-		exir(signum);
+		exit(signum);
 }
 
 int main() {
@@ -23,7 +23,7 @@ int main() {
 	server = new ChatServer(8080);
 	if(!server->start()) {
 		std::cerr << "server noconnected" << std::endl;
-		delete server
+		delete server;
 		return 1;
 	}
 	std::cout << "server is connected, for stop enter Ctrl+C" << std::endl;
