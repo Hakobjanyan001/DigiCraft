@@ -100,11 +100,13 @@ void ChatServer::handleClient(Client* client) {
 	send(client->socket, welcome.c_str(), welcome.size(), 0);
 
 	while(running && client->socket != -1) {
+					std::cout << "*****************************" << std::endl;
 		// clean buffer
 		memset(buffer, 0, sizeof(buffer));
 		
 		// write socket
 		int bytes = read(client->socket, buffer, sizeof(buffer) - 1);
+		std::cout << "Bytes Res: " << bytes << std::endl;
 		if(bytes <= 0) {
 			if(bytes == 0) break;
 			if(errno == EINTR || errno == EAGAIN) continue;
@@ -116,13 +118,18 @@ void ChatServer::handleClient(Client* client) {
 
 		// Process complete lines
 		size_t pos;
-			while((pos = line.find('\n')) != std::string::npos) {
+			std::cout << __FUNCTION__ << __LINE__ << std::endl;
+			std::cout << "LINE::::: " << line << std::endl;
+			//while((pos = line.find('\n')) != std::string::npos) {
+			while(true) {
+			std::cout << __FUNCTION__ << __LINE__ << std::endl;
 				std::string msg = line.substr(0, pos);
 				line.erase(0, pos + 1);
 				
 				//if client don't write name -> ask for write  name
 				if(!client->authenticated) {
 					std::string name = msg;
+					std::cout << "IFFFFF*****************************" << msg<< std::endl;
 				
 					//clean spaces
 					name.erase(std::remove(name.begin(), name.end(), '\r'), name.end());
@@ -168,6 +175,7 @@ void ChatServer::handleClient(Client* client) {
 					}
 				} else if(msg.compare(0, 4, "MSG:")) {  //already logged in -> procces MSG
 					std::string text = msg.substr(4);
+					std::cout << "IFF*****************************" << text << std::endl;
 					
 					// remove first spaces
 					text.erase(0, text.find_first_not_of(" \t"));
@@ -175,6 +183,7 @@ void ChatServer::handleClient(Client* client) {
 
 					// save on Db
 					db.addMessage(client->user.getId(), text);
+					
 
 					// sent broadcast
 					std::string formatted = "[" + client->user.getUsername() + "]: " + text;
