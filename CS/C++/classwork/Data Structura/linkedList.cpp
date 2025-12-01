@@ -39,8 +39,9 @@ public:
 			while(curr->m_next) {
 				curr = curr->m_next;
 			}
-			m_size++;
+			curr->m_next = newNode;
 		}
+		m_size++;
 	}
 	void pop_back() {
 		if(!m_head) {
@@ -50,8 +51,8 @@ public:
 			delete m_head;
 			m_head = nullptr;
 		} else {
-			Node* curr = curr->m_next;
-			while(curr->m_next) {
+			Node* curr = m_head;
+			while(curr->m_next->m_next) {
 				curr = curr->m_next;
 			}
 			delete curr->m_next;
