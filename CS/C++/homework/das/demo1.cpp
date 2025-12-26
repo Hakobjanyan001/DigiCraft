@@ -1,82 +1,93 @@
 #include<iostream>
 #include<string>
 
-template <typename T>
-class myVector : public std::exception{
+class Tree {
+	struct Node;	
+public:
+	Tree() : m_root(nullptr) {}
+	~Tree() {
+		deleteNode(m_root);
+	}
+	
+	void deleteNode(Node* node) {
+		if( node == nullptr ) { return; }
+		deleteNode(node->m_left);
+		deleteNode(node->m_right);
+		delete node;
+	}
+
+	void insert(int val) {
+		m_root = insertInner(m_root, val);
+	}	
+
+	Node* insertInner(Node* node, int val) {
+		if( node == nullptr) { return new Node(val); }
+		if( val < node->m_value ) { 
+			node->m_left = insertInner(node->m_left, val);  
+		} else if ( val > node->m_value ) { 
+			node->m_right = insertInner(node->m_right, val); 
+		}
+		return node;
+	}
+
+	void preOrder() {
+		preOrder(m_root);
+	}
+
+	void inOrder() {
+		inOrder(m_root);
+	}	
+
+	void postOrder() {
+		postOrder(m_root);
+	}
+
+	void preOrder(Node* node) {
+		if( node == nullptr ) { return; } 
+		std::cout << node->m_value << std::endl;
+		preOrder(node->m_left);
+		preOrder(node->m_right);
+	}
+
+	void inOrder(Node* node) {
+		if( node == nullptr ) { return; } 
+		inOrder(node->m_left);
+		std::cout << node->m_value << std::endl;
+		inOrder(node->m_right);
+	}	
+
+	void postOrder(Node* node) {
+		if( node == nullptr ) { return; } 
+		postOrder(node->m_left);
+		postOrder(node->m_right);
+		std::cout << node->m_value << std::endl;
+	}
 private:
-	T* m_arr;
-	int m_size;
-	int m_capacity;
-	
-	void resize(int newCapacity) {
-		T* newArr = new T[newCapacity];
-		for(int i = 0; i < m_size; i++) {
-			newArr[i] = m_arr[i]; 
-		}
-		delete[] m_arr;
-		m_arr = newArr;
-		m_capacity = newCapacity;
-	}
+	struct Node {
+		int m_value;
+		Node* m_left;
+		Node* m_right;
 
-//Seter - Geter
-public:
-	myVector() : m_arr(nullptr), m_size(0), m_capacity(0) {}
-	~myVector() { delete[] m_arr;}
-	
-// API
-public:
-	void push_back(T a) {
-		if( m_capacity == m_size ) {
-			resize(m_capacity == 0 ? 1 : m_capacity * 2 );
-		}
-		m_arr[m_size++] = a;
-	}
-	
-	void pop_back() {
-		if( m_size > 0 ) {
-			m_size--; 
-		}
-	}
+		Node(int val) : m_value(val), m_left(nullptr), m_right(nullptr) {}
+	};
 
-	int size() {
-		return m_size;
-	}
-
-	int capacity() {
-		return m_capacity;
-	}
-	
-	void clear() {
-		m_size = 0;
-	}
-
-	T at(int index) {
-		try {
-			if( index >= 0 && m_size > 0) {
-				return m_arr[index];
-			}
-			throw new myVector();
-		}catch(const std::exception* e) {
-			std::cerr << "Error: " << e->what() << std::endl;
-			return -1;
-		}
-	}
-
+private:
+	Node* m_root;
 };
 
 int main() {
-	myVector<int>* vector = new myVector<int>();
-	vector->push_back(5);
-	vector->push_back(7);
-	vector->push_back(9);
-	vector->push_back(2);
-	std::cout << "size: " << vector->size() << "\n";
-	std::cout << "capacity: " << vector->capacity() << std::endl;
-	vector->pop_back();
-	vector->pop_back();
-	std::cout << "size: " << vector->size() << "\n";
-	std::cout << "capacity: " << vector->capacity() << std::endl;
-	std::cout << "arr[1] = " << vector->at(1) << std::endl;
-	std::cout << "arr[0] = " << vector->at(0) << std::endl;
+	Tree* myTree = new Tree();
+	myTree->insert(12);
+	myTree->insert(15);
+	myTree->insert(20);
+	myTree->insert(3);
+	myTree->insert(2);
+	myTree->insert(1);
+	myTree->insert(8);
+	myTree->insert(6);
+	myTree->insert(13);
+	myTree->preOrder(); 
+	myTree->inOrder();
+	myTree->postOrder();
 return 0;
 }
