@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = SimpleWindow1.0.0
-DISTDIR = /home/hakobjanyan/Project/Qt_learning/Qt_SimpleWindow/build/SimpleWindow1.0.0
+DISTDIR = /home/hakobjanyan/DigiCraft/QtLearning/QtSimpleWindow/build/SimpleWindow1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath-link,/usr/lib/x86_64-linux-gnu
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt6Widgets.so /usr/lib/x86_64-linux-gnu/libQt6Gui.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libQt6Core.so -lpthread -lGLX -lOpenGL   
@@ -130,7 +130,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
-		../../.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -236,7 +235,6 @@ Makefile: simple.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf 
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf \
-		../../.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf \
@@ -334,7 +332,6 @@ Makefile: simple.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf 
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_post.prf:
-../../.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/default_pre.prf:
@@ -384,6 +381,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) $(TARGET) 
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -411,7 +409,7 @@ compiler_moc_header_clean:
 moc_simple_window.cpp: include/simple_window.h \
 		moc_predefs.h \
 		/usr/lib/qt6/libexec/moc
-	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/hakobjanyan/Project/Qt_learning/Qt_SimpleWindow/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/hakobjanyan/Project/Qt_learning/Qt_SimpleWindow -I/home/hakobjanyan/Project/Qt_learning/Qt_SimpleWindow/include -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/simple_window.h -o moc_simple_window.cpp
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/hakobjanyan/DigiCraft/QtLearning/QtSimpleWindow/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/hakobjanyan/DigiCraft/QtLearning/QtSimpleWindow -I/home/hakobjanyan/DigiCraft/QtLearning/QtSimpleWindow/include -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/simple_window.h -o moc_simple_window.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
