@@ -13,10 +13,10 @@ public:
 	SimpleWindow(QWidget* parent = nullptr);
 
 private slots:
-	void digitClicked(const QString &digit);
+	void digitClicked(const QString& digit);
 	void clearDisplay();
 	void changeSign();
-	void operationClicked(const QString& operation);
+	void operationClicked(const QString& op);
 	void calculate();
 	void equalClicked();
 
@@ -27,6 +27,7 @@ private:
 	double firstNumber = 0;
 	QString possibleOperation = "";
 	bool waitingForSecondNumber = false;
+	QString text = "";
 
 	void createDigitButton(const QString &text, 
 							int row, 

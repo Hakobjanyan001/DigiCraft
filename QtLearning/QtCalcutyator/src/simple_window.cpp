@@ -12,7 +12,7 @@ SimpleWindow::SimpleWindow(QWidget* parent) : QWidget(parent) {
 	display->setReadOnly(true);
 	display->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	display->setFont(QFont("Segoe UI", 32, QFont::Bold));
-	display->setStyleSheet("background: #1a1a2e; color: white; padding: 12px; border: none;");
+	display->setStyleSheet("background: black; color: white; padding: 12px; border: none;");
 
 	grid = new QGridLayout(this);
 	grid->setSpacing(8);
@@ -20,34 +20,40 @@ SimpleWindow::SimpleWindow(QWidget* parent) : QWidget(parent) {
 	grid->addWidget(display, 0, 0, 1, 4);
 
 	// tver
-	createDigitButton("7", 1, 0);
-	createDigitButton("8", 1, 1);
-	createDigitButton("9", 1, 2);
-	createDigitButton("4", 2, 0);
-	createDigitButton("5", 2, 1);
-	createDigitButton("6", 2, 2);
-	createDigitButton("1", 3, 0);
-	createDigitButton("2", 3, 1);
-	createDigitButton("3", 3, 2);
-	createDigitButton("0", 4, 0, 1, 2);
-	createDigitButton(".", 4, 2);
+	createDigitButton("7", 2, 0);
+	createDigitButton("8", 2, 1);
+	createDigitButton("9", 2, 2);
+	createDigitButton("4", 3, 0);
+	createDigitButton("5", 3, 1);
+	createDigitButton("6", 3, 2);
+	createDigitButton("1", 4, 0);
+	createDigitButton("2", 4, 1);
+	createDigitButton("3", 4, 2);
+	createDigitButton("0", 5, 1);
+	createDigitButton(".", 1, 0);
 	
 	// C ev +/-
-	createDigitButton("C", 1, 3);
-	createDigitButton("+/-", 2, 3);
+	createDigitButton("+/-", 1, 1);
 
 	// gorcoxutyun
-	createDigitButton("+", 1,3 );
-	createDigitButton("-", 2,3 );
-	createDigitButton("*", 3,3 );
-	createDigitButton("/", 4,3 );
+	createOperationButton("+", 1,3 );
+	createOperationButton("-", 2,3 );
+	createOperationButton("*", 3,3 );
+	createOperationButton("/", 4,3 );
 	setLayout(grid);
-
+	
+	QPushButton* clearBtn = new QPushButton("C", this);
+	clearBtn->setFont(QFont("Arial",20));
+	clearBtn->setFixedSize(70,70);
+	clearBtn->setStyleSheet("background: green; color: white; border-radius: 8px;");
+	grid->addWidget(clearBtn, 5, 2);
+	connect(clearBtn, &QPushButton::clicked, this, &SimpleWindow::clearDisplay);
+	
 	QPushButton* equalBtn = new QPushButton("=", this);
 	equalBtn->setFont(QFont("Arial", 20));
 	equalBtn->setFixedSize(70, 70);
-	equalBtn->setStyleSheet("background: #28a745; color: white; border-radius: 8px;");
-	grid-> addWidget(equalBtn, 4, 3);
+	equalBtn->setStyleSheet("background: green; color: white; border-radius: 8px;");
+	grid->addWidget(equalBtn, 1, 2);
 	connect(equalBtn, &QPushButton::clicked, this, &SimpleWindow::equalClicked);
 
 	setLayout(grid);
@@ -57,7 +63,7 @@ void SimpleWindow::createDigitButton(const QString& text, int row, int column, i
 	QPushButton* btn = new QPushButton(text, this);
 	btn->setFont(QFont("Segoe UI", 20));
 	btn->setFixedSize(70,70);
-	btn->setStyleSheet("background: #2a2a4a; color: white; border-radius: 8px;");
+	btn->setStyleSheet("background: black; color: white; border-radius: 8px;");
 
 	grid->addWidget(btn, row, column, row_number, coulumn_number);
 
@@ -74,14 +80,13 @@ void SimpleWindow::createDigitButton(const QString& text, int row, int column, i
 
 void SimpleWindow::digitClicked(const QString& digit) {
 	if(waitingForSecondNumber) {
-		currentInput = "0";
+		currentInput.clear();
 		waitingForSecondNumber = false;
 	}
-
 	if(digit == ".") {
 		if(currentInput.contains('.')) return;
 		if(currentInput.isEmpty() || currentInput == "0") {
-			currentInput = "0";
+			currentInput = "0.";
 		}else {
 			currentInput += ".";
 		}
@@ -92,12 +97,13 @@ void SimpleWindow::digitClicked(const QString& digit) {
 			currentInput += digit;
 		}
 	}
-	display->setText(currentInput);
+	display->setText(text + " " + currentInput);
 }
 
 void SimpleWindow::clearDisplay() {
 	currentInput = "0";
 	display->setText("0");
+	text = "0";
 	possibleOperation = "";
 	waitingForSecondNumber = false;
 	display->setText("0");
@@ -116,7 +122,7 @@ void SimpleWindow::createOperationButton(const QString &operation, int row, int 
 	QPushButton* btn = new QPushButton(operation, this);
 	btn->setFont(QFont("Arial", 20));
 	btn->setFixedSize(70, 70);
-	btn->setStyleSheet("background: #ff9500; color: white; border-radius: 8px;");
+	btn->setStyleSheet("background: black; color: white; border-radius: 8px;");
 	grid->addWidget(btn, row, column);
 
 	connect(btn, &QPushButton::clicked, this, [this, operation]() {
@@ -124,26 +130,32 @@ void SimpleWindow::createOperationButton(const QString &operation, int row, int 
 	});
 }
 
-void SimpleWindow::operationClicked(const QString& operation){
+void SimpleWindow::operationClicked(const QString& op){
 	if(waitingForSecondNumber) { 
 		calculate();
 	}
 
 	firstNumber = currentInput.toDouble();
-	possibleOperation = operation;
+	possibleOperation = op;
 	waitingForSecondNumber = true;
+	text = currentInput + " " + op;
+	display->setText(text);
 	currentInput = "0";
-	display->setText("0");
 }
 
 void SimpleWindow::calculate() {
+	if(possibleOperation.isEmpty()) return;
+
 	double secondNumber = currentInput.toDouble();
 	double result = 0;
 	
-	if(possibleOperation == "+") result = firstNumber + secondNumber;
-	if(possibleOperation == "-") result = firstNumber - secondNumber;
-	if(possibleOperation == "*") result = firstNumber * secondNumber;
-	if(possibleOperation == "/") {
+	if(possibleOperation == "+") {
+		result = firstNumber + secondNumber;
+	}else if(possibleOperation == "-") {
+		result = firstNumber - secondNumber;
+	}else if(possibleOperation == "*") {
+		result = firstNumber * secondNumber;
+	}else if(possibleOperation == "/") {
 		if(secondNumber == 0) {
 			display->setText("Error");
 			currentInput = "0";
@@ -156,12 +168,17 @@ void SimpleWindow::calculate() {
 
 	currentInput = QString::number(result);
 	display->setText(currentInput);
+	
+	firstNumber = result;
+	text = currentInput;
 	waitingForSecondNumber = false;
 	possibleOperation = "";
 }
 
 void SimpleWindow::equalClicked() {
-	if(waitingForSecondNumber && !possibleOperation.isEmpty()){
+	if(!possibleOperation.isEmpty()){
 		calculate();
 	}
+		text = currentInput;
+		display->setText(text);
 }

@@ -34,7 +34,7 @@ struct qt_meta_stringdata_SimpleWindow_t {
     char stringdata4[13];
     char stringdata5[11];
     char stringdata6[17];
-    char stringdata7[10];
+    char stringdata7[3];
     char stringdata8[10];
     char stringdata9[13];
 };
@@ -49,9 +49,9 @@ Q_CONSTINIT static const qt_meta_stringdata_SimpleWindow_t qt_meta_stringdata_Si
         QT_MOC_LITERAL(33, 12),  // "clearDisplay"
         QT_MOC_LITERAL(46, 10),  // "changeSign"
         QT_MOC_LITERAL(57, 16),  // "operationClicked"
-        QT_MOC_LITERAL(74, 9),  // "operation"
-        QT_MOC_LITERAL(84, 9),  // "calculate"
-        QT_MOC_LITERAL(94, 12)   // "equalClicked"
+        QT_MOC_LITERAL(74, 2),  // "op"
+        QT_MOC_LITERAL(77, 9),  // "calculate"
+        QT_MOC_LITERAL(87, 12)   // "equalClicked"
     },
     "SimpleWindow",
     "digitClicked",
@@ -60,7 +60,7 @@ Q_CONSTINIT static const qt_meta_stringdata_SimpleWindow_t qt_meta_stringdata_Si
     "clearDisplay",
     "changeSign",
     "operationClicked",
-    "operation",
+    "op",
     "calculate",
     "equalClicked"
 };
