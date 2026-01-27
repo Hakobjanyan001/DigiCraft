@@ -2,17 +2,17 @@
 #define SYSTEMAGENT_H
 
 // third-party library
-#include <Qobject>
+#include <QObject>
 #include <QTcpSocket>
 #include <QTimer>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QDateTimne>
+#include <QDateTime>
 
-class SystemAgent : public Qobject {
+class SystemAgent : public QObject {
 	Q_OBJECT
 public:
-	SystemAgent(Qobject* parent = nullptr);
+	SystemAgent(QObject* parent = nullptr);
 
 private slots:
 	void onServerConnected(); // kkanchvi erb serveri het kap hastatvi
@@ -22,6 +22,9 @@ private:
 	QTcpSocket* networkSocket; // cancayin kapi objekt
 	QTimer* updateTimer; // jamanakachap, parberakan ashxatanqi hamar
 	QJsonObject collectDataRAM(); // havaquma Rami tvyalnery ev sarqum JSON
+
+public:
+	void start();
 };
 
 #endif //SYSTEMAGENT_H
